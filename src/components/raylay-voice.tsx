@@ -11,8 +11,12 @@ export function RaylayVoice() {
         Raylay voice
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-        What the number means
+        Ask what you should take note of
       </h2>
+      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-2">
+        “What’s happened in the past couple of hours that I should take note of?” It answers in
+        the same words a fisherman or a crew would use.
+      </p>
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
         <ol className="space-y-6">
           <Beat n="01" title="Silent, named">
@@ -61,7 +65,7 @@ export function RaylayVoice() {
             ))}
           </div>
           <p className="border-t border-border px-4 py-3 font-mono text-[11px] text-ink-3">
-            Ask about the water
+            Ask about the last couple of hours
           </p>
         </div>
       </div>

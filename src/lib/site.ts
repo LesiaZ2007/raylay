@@ -11,6 +11,10 @@ export type SectionId = (typeof SECTIONS)[number]["id"];
 
 export const VOICE_THREAD = [
   {
+    role: "you",
+    text: "What's happened in the past couple of hours that I should take note of?",
+  },
+  {
     role: "raylay",
     text: "Buoy one had two critical silent periods, most recently about six minutes ago and another twelve minutes ago.",
   },

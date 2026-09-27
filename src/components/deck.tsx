@@ -62,7 +62,7 @@ export function Deck() {
           <div className="relative z-[2] max-w-md md:max-w-lg">
             <h1 className="text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              A cheaper buoy network anyone can place. About 26 cm, printed, and easy to make. The
+              A cheaper buoy network anyone can place. About 26 cm across, and easy to make. The
               numbers come back for a fisherman, a conservation crew, or anyone watching the water.
             </p>
           </div>
