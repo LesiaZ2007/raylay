@@ -1,6 +1,6 @@
 "use client";
 
-import { Bounds, Center } from "@react-three/drei";
+import { Bounds, Center, ContactShadows, Environment } from "@react-three/drei";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Component, Suspense, useMemo, useRef, type ReactNode } from "react";
 import { Box3, Vector3, type Group } from "three";
@@ -36,12 +36,19 @@ function RayHull() {
           geometry={prepared.geometry}
           rotation={[-Math.PI / 2.15, 0.15, 0.2]}
           scale={prepared.scale}
+          castShadow
+          receiveShadow
         >
-          <meshStandardMaterial
-            color="#e4e4e4"
-            metalness={0.28}
-            roughness={0.36}
-            envMapIntensity={1}
+          <meshPhysicalMaterial
+            color="#9fd9d6"
+            metalness={0.12}
+            roughness={0.32}
+            clearcoat={0.9}
+            clearcoatRoughness={0.18}
+            sheen={0.55}
+            sheenRoughness={0.4}
+            sheenColor="#08bdba"
+            envMapIntensity={1.15}
           />
         </mesh>
       </Center>
@@ -52,14 +59,34 @@ function RayHull() {
 function Scene() {
   return (
     <>
-      <hemisphereLight args={["#f4f4f4", "#0b3b3c", 0.55]} />
-      <directionalLight position={[4, 7, 6]} intensity={1.35} color="#ffffff" />
-      <directionalLight position={[-6, 1, -2]} intensity={0.7} color="#08bdba" />
-      <spotLight position={[0, 8, 2]} intensity={0.45} color="#3ddbd9" angle={0.5} />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.55, 0]}>
-        <ringGeometry args={[1.15, 2.35, 64]} />
-        <meshBasicMaterial color="#08bdba" transparent opacity={0.12} />
-      </mesh>
+      <hemisphereLight args={["#dff7f6", "#062526", 0.7]} />
+      <ambientLight intensity={0.28} color="#c8ecea" />
+      <directionalLight
+        position={[5, 8, 4]}
+        intensity={1.55}
+        color="#ffffff"
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+        shadow-bias={-0.0002}
+      />
+      <directionalLight position={[-5, 3, -3]} intensity={0.85} color="#08bdba" />
+      <spotLight
+        position={[1, 7, 3]}
+        intensity={0.7}
+        color="#3ddbd9"
+        angle={0.42}
+        penumbra={0.55}
+        castShadow
+      />
+      <Environment preset="studio" environmentIntensity={0.55} />
+      <ContactShadows
+        position={[0, -1.55, 0]}
+        opacity={0.45}
+        scale={10}
+        blur={2.8}
+        far={5}
+        color="#041618"
+      />
       <Bounds fit observe margin={1.08} clip={false} maxDuration={0.5}>
         <RayHull />
       </Bounds>
@@ -99,10 +126,11 @@ export function BuoyViewer({ className }: { className?: string }) {
           }
         >
           <Canvas
+            shadows
             camera={{ position: [5.4, 2.4, 6.2], fov: 28, near: 0.1, far: 80 }}
             dpr={[1, 1.6]}
             gl={{ antialias: true, alpha: true }}
-            style={{ touchAction: "pan-y" }}
+            style={{ touchAction: "pan-y", background: "transparent" }}
           >
             <Scene />
           </Canvas>
