@@ -6,58 +6,36 @@ export const SECTIONS = [
   { id: "compare", label: "Cost" },
   { id: "live", label: "Live" },
   { id: "assistant", label: "Raylay voice" },
-  { id: "fishing", label: "Landings" },
-  { id: "neighborhoods", label: "Their call" },
-  { id: "boats", label: "Small boats" },
-  { id: "mesh", label: "A group" },
+  { id: "neighborhoods", label: "Who it helps" },
   { id: "hull", label: "Hull" },
-  { id: "end", label: "Tideline" },
 ] as const;
 
 export type SectionId = (typeof SECTIONS)[number]["id"];
 
 export const PARTS = [
   {
-    name: "Board",
-    job: "Reads the sensors and hops a packet about every two seconds.",
+    name: "Location",
+    job: "GPS ties the reading to a place. A moving fix means the hull left the water you think you are watching.",
   },
   {
-    name: "Temperature sensor",
-    job: "Waterproof probe. That is the water temperature.",
+    name: "Water temperature",
+    job: "Bait and fish move with a degree or two. This is the number a morning starts on.",
   },
   {
-    name: "Air and pressure",
-    job: "Air temperature and barometric pressure, next to the water reading.",
+    name: "Air temperature",
+    job: "The gap between air and water is how fast the surface day is changing.",
   },
   {
-    name: "Motion sensor",
-    job: "50 samples a second, turned into wave energy, peak, and tilt.",
+    name: "Pressure",
+    job: "A falling barometer is the call to get in before the forecast catches up.",
   },
   {
-    name: "GPS",
-    job: "Fix and time. If the hull drifts, the packet moves with it.",
+    name: "Waves and tilt",
+    job: "Under 0.02 g is a calm crossing. Over 0.1 g is stay ashore.",
   },
   {
-    name: "Battery and solar",
-    job: "A small pack, a 1W panel, and a charger you can leave in the water.",
-  },
-] as const;
-
-export const COMPARE = [
-  {
-    topic: "What it costs to own",
-    them: "A directional waverider is usually $15,000 to $50,000, plus a boat to service it.",
-    us: "A printed hull, a board, catalog sensors, and a 1W panel.",
-  },
-  {
-    topic: "Who can keep it running",
-    them: "About 200 NDBC buoys for the country, on shipping lanes and research lines.",
-    us: "A shop class can reprint a cracked fairing and swap a $4 probe.",
-  },
-  {
-    topic: "What you get back",
-    them: "Specialized portals, often on a 30-minute cycle.",
-    us: "A two-second packet: water, air, pressure, wave energy, tilt, GPS.",
+    name: "Power",
+    job: "A 1W panel keeps it deployed. No service boat, so a landing can leave it where people use the water.",
   },
 ] as const;
 

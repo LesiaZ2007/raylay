@@ -11,22 +11,18 @@ export function RaylayVoice() {
         Raylay voice
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-        Ask it what the packet means
+        The packet, in what it does to you going out
       </h2>
-      <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-2">
-        It names a silent buoy, opens the wave plot, and says what 0.83 g does to a skiff.
-      </p>
-
-      <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
-        <ol className="space-y-5 text-[15px] leading-relaxed text-ink-2">
-          <Beat n="01" title="Abnormalities">
-            Silent periods and a 0.83 g peak get named before you hunt through a plot.
+      <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+        <ol className="space-y-6">
+          <Beat n="01" title="Silent, named">
+            Two gaps on buoy one, six and twelve minutes ago, before anyone scrolls a plot.
           </Beat>
-          <Beat n="02" title="Plain language">
-            Rough is 0.10 g RMS. The assistant opens that chart and says the hull crossed it.
+          <Beat n="02" title="0.83 g peak">
+            Rough starts at 0.10 g RMS. It opens that chart and says the hull crossed it.
           </Beat>
-          <Beat n="03" title="Effects">
-            Ask what it means for you. It answers in a boat and a swimmer, not in raw g.
+          <Beat n="03" title="In a boat">
+            Rocking that makes people sick. A swimmer hits stronger, less predictable waves.
           </Beat>
         </ol>
 
@@ -79,7 +75,7 @@ function Beat({ n, title, children }: { n: string; title: string; children: stri
       <p className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">
         {n} · {title}
       </p>
-      <p className="mt-2">{children}</p>
+      <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{children}</p>
     </li>
   );
 }
