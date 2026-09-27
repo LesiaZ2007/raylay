@@ -68,13 +68,16 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
       <div className="mt-6 grid gap-3 md:grid-cols-2">
         <Meaning
           who="A fisherman"
-          text={`Water at ${reading.waterC.toFixed(1)}°C is the band bait and fish are sitting in. Waves at ${reading.waveRmsG.toFixed(3)} g RMS, peak ${reading.wavePeakG.toFixed(3)} g. Under 0.02 g the surface is quiet. Over 0.1 g it is working hard.`}
+          text={`Water at ${reading.waterC.toFixed(1)}°C is where bait and fish are sitting. Waves are at ${reading.waveRmsG.toFixed(3)} g RMS, peak ${reading.wavePeakG.toFixed(2)} g.`}
         />
         <Meaning
           who="A conservation crew"
-          text={`Air at ${reading.airC.toFixed(1)}°C against that water, and ${reading.pressureHpa.toFixed(0)} hPa overhead. A temperature jump, or a node that goes quiet, is the local record, in the same units a lab would use.`}
+          text={`Air at ${reading.airC.toFixed(1)}°C against that water, and ${reading.pressureHpa.toFixed(0)} hPa overhead. A temperature jump, or a node that goes quiet, is the local record.`}
         />
       </div>
+      <p className="mt-4 font-mono text-xs text-ink-3">
+        A stretch over 0.1 g RMS is a rough-water patch. A peak like {reading.wavePeakG.toFixed(2)} g is an impact warning.
+      </p>
     </div>
   );
 }

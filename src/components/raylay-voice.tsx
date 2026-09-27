@@ -18,11 +18,11 @@ export function RaylayVoice() {
           <Beat n="01" title="Silent, named">
             Two gaps on buoy one, six and twelve minutes ago, before anyone scrolls a plot.
           </Beat>
-          <Beat n="02" title="0.83 g peak">
-            Rough starts at 0.10 g RMS. It opens that chart and says the hull crossed it.
+          <Beat n="02" title="Rough-water patch">
+            A stretch over 0.10 g RMS. It opens that chart and says where the hull crossed it.
           </Beat>
-          <Beat n="03" title="In plain words">
-            0.83 g is the hull getting tossed. A fisherman and a crew hear the same sentence.
+          <Beat n="03" title="Impact warning">
+            0.83 g is the hit, named out loud. A fisherman and a crew hear the same sentence.
           </Beat>
         </ol>
 
