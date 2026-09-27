@@ -40,15 +40,15 @@ function RayHull() {
           receiveShadow
         >
           <meshPhysicalMaterial
-            color="#9fd9d6"
-            metalness={0.12}
-            roughness={0.32}
-            clearcoat={0.9}
-            clearcoatRoughness={0.18}
-            sheen={0.55}
-            sheenRoughness={0.4}
-            sheenColor="#08bdba"
-            envMapIntensity={1.15}
+            color="#d8d6d1"
+            metalness={0.08}
+            roughness={0.42}
+            clearcoat={0.65}
+            clearcoatRoughness={0.28}
+            sheen={0.2}
+            sheenRoughness={0.55}
+            sheenColor="#b8b4ae"
+            envMapIntensity={0.9}
           />
         </mesh>
       </Center>
@@ -59,8 +59,8 @@ function RayHull() {
 function Scene() {
   return (
     <>
-      <hemisphereLight args={["#dff7f6", "#062526", 0.7]} />
-      <ambientLight intensity={0.28} color="#c8ecea" />
+      <hemisphereLight args={["#f2f0ec", "#1a1a1a", 0.65]} />
+      <ambientLight intensity={0.32} color="#ebe8e2" />
       <directionalLight
         position={[5, 8, 4]}
         intensity={1.55}
@@ -69,23 +69,23 @@ function Scene() {
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      <directionalLight position={[-5, 3, -3]} intensity={0.85} color="#08bdba" />
+      <directionalLight position={[-5, 3, -3]} intensity={0.45} color="#c9c4bc" />
       <spotLight
         position={[1, 7, 3]}
-        intensity={0.7}
-        color="#3ddbd9"
+        intensity={0.5}
+        color="#fff8f0"
         angle={0.42}
         penumbra={0.55}
         castShadow
       />
-      <Environment preset="studio" environmentIntensity={0.55} />
+      <Environment preset="studio" environmentIntensity={0.45} />
       <ContactShadows
         position={[0, -1.55, 0]}
-        opacity={0.45}
+        opacity={0.4}
         scale={10}
         blur={2.8}
         far={5}
-        color="#041618"
+        color="#0a0a0a"
       />
       <Bounds fit observe margin={1.08} clip={false} maxDuration={0.5}>
         <RayHull />
