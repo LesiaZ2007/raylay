@@ -1,17 +1,17 @@
 # Raylay
 
-A short scrolling talk for the Raylay buoy mesh. The live console is [Tideline](https://raylay.amuhak.com).
+Presentation site for the Raylay buoy mesh. Live console: [Tideline](https://raylay.amuhak.com).
 
-What the buoys actually report:
+## What the buoys report
 
-- Water temperature (°C)
-- Air temperature (°C)
-- Pressure (hPa)
-- Wave energy RMS and peak (g)
-- Tilt (°)
-- GPS
+Water temperature, air temperature, pressure, wave energy (RMS and peak, in g), tilt, and GPS. Packets hop over ESP-NOW to a base station. This page reads `https://raylay.amuhak.com/api/nodes`.
 
-They hop packets over an ESP-NOW mesh to a base station. This site pulls the latest packet from `https://raylay.amuhak.com/api/nodes` and uses Tideline’s dark theme (`#161616` / `#08bdba`, IBM Plex).
+## Figures used in the talk
+
+- $138 billion in U.S. recreational saltwater fishing sales, 201 million trips, about 692,000 jobs (NOAA Fisheries, FEUS 2022)
+- About 200 buoys in the NOAA NDBC network (NDBC program assessment)
+- $97 million drop in Dungeness crab landings and about $40 million in lost Washington tourism after the 2015 West Coast HAB (NMFS / NOAA NCCOS)
+- $59 million a year at risk for Lake Erie recreational anglers if the western basin closed (peer-reviewed recreation study)
 
 ## Run
 
