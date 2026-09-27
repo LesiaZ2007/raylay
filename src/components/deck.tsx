@@ -104,21 +104,23 @@ export function Deck() {
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
             What this means on the water
           </h2>
-          <ul className="mt-10 max-w-3xl space-y-6 text-[15px] leading-relaxed text-ink-2">
+          <ul className="mt-10 max-w-3xl space-y-7 text-xl leading-relaxed text-ink-2 md:text-2xl">
             <li>
-              <span className="text-ink">A fisherman</span> gets water temperature and wave energy
-              for their own landing, not a national buoy hours away — and can ask what happened in
-              the past couple of hours.
+              <span className="text-ink">A fisherman</span> sees temperature and waves at their own
+              landing, said in ordinary words, and can ask what happened in the past couple of hours.
             </li>
             <li>
-              <span className="text-ink">A conservation group</span> keeps a local record: quiet
-              stretches, rough-water patches, impact warnings, named in the same sentence.
+              <span className="text-ink">A conservation group</span> gets a local record of quiet
+              water, rough patches, and impact warnings without a specialist portal.
             </li>
             <li>
-              <span className="text-ink">A community</span> can afford the hull. $15,000–$50,000
-              becomes parts, and the reading belongs to the people watching that shore.
+              <span className="text-ink">A community</span> can afford the hull. $15,000 to $50,000
+              becomes parts their people can keep and read.
             </li>
           </ul>
+          <p className="mt-14 max-w-3xl text-3xl font-light leading-snug tracking-tight text-ink md:text-4xl">
+            Local water, local numbers, clear enough for anyone on that shore.
+          </p>
         </Pane>
       </Slide>
     </div>
