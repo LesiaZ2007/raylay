@@ -40,15 +40,15 @@ function RayHull() {
           receiveShadow
         >
           <meshPhysicalMaterial
-            color="#d8d6d1"
-            metalness={0.08}
-            roughness={0.42}
-            clearcoat={0.65}
-            clearcoatRoughness={0.28}
-            sheen={0.2}
-            sheenRoughness={0.55}
-            sheenColor="#b8b4ae"
-            envMapIntensity={0.9}
+            color="#eceae4"
+            metalness={0.14}
+            roughness={0.28}
+            clearcoat={0.85}
+            clearcoatRoughness={0.16}
+            sheen={0.35}
+            sheenRoughness={0.4}
+            sheenColor="#d4cfc6"
+            envMapIntensity={1.2}
           />
         </mesh>
       </Center>
