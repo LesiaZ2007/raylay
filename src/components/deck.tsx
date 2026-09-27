@@ -80,7 +80,7 @@ export function Deck() {
           </h2>
           <div className="mt-12 grid gap-px bg-border md:grid-cols-3">
             <Gap label="To own one" them="$15,000–$50,000" us="About $200" />
-            <Gap label="Who owns it" them="A national network" us="A landing, a lake" />
+            <Gap label="Who owns it" them="A national network" us="Local community needs" />
             <Gap label="How fresh" them="Every 30 min" us="Every 2 sec" />
           </div>
         </Pane>
