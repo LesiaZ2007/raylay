@@ -78,14 +78,22 @@
 .tide-grid {
   background-color: #161616;
   background-image:
-    linear-gradient(#ffffff0a 1px, transparent 1px),
-    linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(#ffffff14 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff14 1px, transparent 1px);
+  background-size: 56px 56px;
   background-position: center top;
 }
 
+.tide-grid-near {
+  background-image:
+    linear-gradient(#08bdba22 1px, transparent 1px),
+    linear-gradient(90deg, #08bdba22 1px, transparent 1px);
+  background-size: 112px 112px;
+  background-position: center center;
+}
+
 .tide-water {
-  background: linear-gradient(180deg, transparent 0%, #0b3b3c 72%, #083032 100%);
+  background: linear-gradient(180deg, transparent 0%, #0b3b3c 58%, #072c2e 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
