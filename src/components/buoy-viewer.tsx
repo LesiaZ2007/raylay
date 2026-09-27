@@ -59,33 +59,34 @@ function RayHull() {
 function Scene() {
   return (
     <>
-      <hemisphereLight args={["#f2f0ec", "#1a1a1a", 0.65]} />
-      <ambientLight intensity={0.32} color="#ebe8e2" />
+      <hemisphereLight args={["#fffaf3", "#0d1114", 0.45]} />
+      <ambientLight intensity={0.18} color="#e8e4dc" />
       <directionalLight
-        position={[5, 8, 4]}
-        intensity={1.55}
+        position={[5.5, 8.5, 4]}
+        intensity={2.1}
         color="#ffffff"
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      <directionalLight position={[-5, 3, -3]} intensity={0.45} color="#c9c4bc" />
+      <directionalLight position={[-6, 2.5, -3]} intensity={0.55} color="#8a9098" />
+      <directionalLight position={[0, -2, 4]} intensity={0.35} color="#c4b8a8" />
       <spotLight
-        position={[1, 7, 3]}
-        intensity={0.5}
-        color="#fff8f0"
-        angle={0.42}
-        penumbra={0.55}
+        position={[2, 8, 3]}
+        intensity={1.1}
+        color="#fff7ec"
+        angle={0.38}
+        penumbra={0.65}
         castShadow
       />
-      <Environment preset="studio" environmentIntensity={0.45} />
+      <Environment preset="studio" environmentIntensity={0.7} />
       <ContactShadows
         position={[0, -1.55, 0]}
-        opacity={0.4}
+        opacity={0.55}
         scale={10}
-        blur={2.8}
+        blur={2.4}
         far={5}
-        color="#0a0a0a"
+        color="#000000"
       />
       <Bounds fit observe margin={1.08} clip={false} maxDuration={0.5}>
         <RayHull />
