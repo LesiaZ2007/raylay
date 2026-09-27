@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Field, Pane, Slide } from "@/components/fx";
 import { usePresentation } from "@/hooks/use-presentation";
+import { useStation } from "@/hooks/use-station";
 import { LIVE_STATION_URL, SECTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,7 @@ const BuoyViewer = dynamic(
 
 export function Deck() {
   const active = usePresentation();
+  const station = useStation();
   const { scrollYProgress } = useScroll();
   const progress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -52,6 +54,9 @@ export function Deck() {
           <h1 className="text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
             A printed hull for the landing that never gets an official buoy.
+          </p>
+          <p className="mt-4 font-mono text-[11px] text-ink-3">
+            <StationLine payload={station} />
           </p>
         </Pane>
       </Slide>
@@ -103,6 +108,18 @@ export function Deck() {
       </Slide>
     </div>
   );
+}
+
+function StationLine({ payload }: { payload: ReturnType<typeof useStation> }) {
+  if (!payload) return "Reading the buoy";
+  const { reading } = payload;
+  if (payload.source === "live") {
+    return `Live · buoy ${reading.name} · ${reading.waterC.toFixed(1)}°C`;
+  }
+  if (payload.source === "station") {
+    return `Buoy ${reading.name} · ${reading.waterC.toFixed(1)}°C`;
+  }
+  return "Example packet · station not reached";
 }
 
 function MeshGraphic() {
