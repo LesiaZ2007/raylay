@@ -54,7 +54,7 @@ function isFresh(node: Record<string, unknown>) {
   return age !== null && age < 20;
 }
 
-export function readingFromTideline(raw: unknown): { reading: TelemetryReading; live: boolean } | null {
+export function readingFromStation(raw: unknown): { reading: TelemetryReading; live: boolean } | null {
   const root = asRecord(raw);
   if (!root) return null;
 

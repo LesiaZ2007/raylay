@@ -5,13 +5,13 @@ export const SECTIONS = [
   { id: "how", label: "How it works" },
   { id: "compare", label: "Cost" },
   { id: "live", label: "Live" },
-  { id: "assistant", label: "Tideline voice" },
+  { id: "assistant", label: "Raylay voice" },
   { id: "fishing", label: "Landings" },
   { id: "neighborhoods", label: "Their call" },
   { id: "boats", label: "Small boats" },
   { id: "mesh", label: "A group" },
   { id: "hull", label: "Hull" },
-  { id: "end", label: "Tideline" },
+  { id: "end", label: "Raylay" },
 ] as const;
 
 export type SectionId = (typeof SECTIONS)[number]["id"];
@@ -23,11 +23,11 @@ export const PARTS = [
   },
   {
     name: "Temperature sensor",
-    job: "Waterproof probe on a cable. That is water temperature on Tideline. Buoy #1 has been around 21.1°C.",
+    job: "Waterproof probe on a cable. That is water temperature on Raylay. Buoy #1 has been around 21.1°C.",
   },
   {
     name: "Air and pressure",
-    job: "Air temperature and barometric pressure. Tideline shows these next to the water reading.",
+    job: "Air temperature and barometric pressure. Raylay shows these next to the water reading.",
   },
   {
     name: "Motion sensor",
@@ -57,13 +57,13 @@ export const COMPARE = [
   {
     topic: "What you get back",
     them: "Specialized portals, often on a 30-minute cycle, aimed at forecasts and ship routing.",
-    us: "A two-second packet on Tideline: water, air, pressure, wave energy, tilt, GPS. Public URL.",
+    us: "A two-second packet on Raylay: water, air, pressure, wave energy, tilt, GPS. Public URL.",
   },
 ] as const;
 
 export const VOICE_THREAD = [
   {
-    role: "tideline",
+    role: "raylay",
     text: "Buoy one had two critical silent periods, most recently about six minutes ago and another twelve minutes ago.",
   },
   {
@@ -71,7 +71,7 @@ export const VOICE_THREAD = [
     text: "show_problem(#1 · offline · 6 min and 12 min ago)",
   },
   {
-    role: "tideline",
+    role: "raylay",
     text: "It also saw rough water with a peak of 0.83 g about fourteen minutes ago.",
   },
   {
@@ -79,7 +79,7 @@ export const VOICE_THREAD = [
     text: "show_problem(#1 · waves · 0.83 g peak)",
   },
   {
-    role: "tideline",
+    role: "raylay",
     text: "That's the main abnormality on record.",
   },
   {
@@ -91,7 +91,7 @@ export const VOICE_THREAD = [
     text: "show_chart(#1, wave_rms_g, 20 min, rough water period)",
   },
   {
-    role: "tideline",
+    role: "raylay",
     text: "Opened the wave RMS chart for buoy one. It crossed the rough threshold of 0.10 g RMS, with a peak of 0.83 g.",
   },
   {
@@ -99,7 +99,7 @@ export const VOICE_THREAD = [
     text: "What does this mean in terms of effects on me?",
   },
   {
-    role: "tideline",
+    role: "raylay",
     text: "0.83 g peak means the hull is getting tossed. On a small boat you would feel real rocking, the kind that makes people sick. A swimmer would hit stronger, less predictable waves.",
   },
 ] as const;

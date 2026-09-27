@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Field, Pane, Slide, Spark } from "@/components/fx";
 import { LiveView, useStation } from "@/components/live-view";
-import { TidelineVoice } from "@/components/tideline-voice";
+import { RaylayVoice } from "@/components/raylay-voice";
 import { usePresentation } from "@/hooks/use-presentation";
 import { COMPARE, LIVE_STATION_URL, PARTS, SECTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -35,7 +35,7 @@ export function Deck() {
           Raylay
         </a>
         <a href={LIVE_STATION_URL} className="pointer-events-auto font-mono text-xs text-accent">
-          Tideline
+          Live
         </a>
       </header>
 
@@ -59,7 +59,7 @@ export function Deck() {
           <h1 className="mt-3 text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
             A printed hull, a board, and a handful of catalog sensors. They mesh over ESP-NOW and
-            show up on Tideline as water, air, pressure, wave energy, tilt, and GPS.
+            show up on Raylay as water, air, pressure, wave energy, tilt, and GPS.
           </p>
           <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             <Metric label="Water" value={station.waterC.toFixed(1)} unit="°C" />
@@ -86,7 +86,7 @@ export function Deck() {
           </h2>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">
             The board reads the temperature probe and the other sensors, then hops a small packet
-            to the next buoy or to the laptop that runs Tideline.
+            to the next buoy or to the laptop that runs Raylay.
           </p>
           <div className="mt-10 grid gap-px bg-border sm:grid-cols-2">
             {PARTS.map((part) => (
@@ -143,7 +143,7 @@ export function Deck() {
 
       <Slide id="assistant">
         <Pane>
-          <TidelineVoice />
+          <RaylayVoice />
         </Pane>
       </Slide>
 
@@ -164,7 +164,7 @@ export function Deck() {
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
             Buoy {station.name} is at {station.waterC.toFixed(1)}°C. That is the number a dock
-            already wants. Tideline puts it on a page for the harbor that actually uses it.
+            already wants. Raylay puts it on a page for the harbor that actually uses it.
           </p>
         </Pane>
       </Slide>
@@ -184,7 +184,7 @@ export function Deck() {
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
             Raylay is cheap enough that the neighborhood puts a hull in the water it actually uses.
-            Tideline is a public page they keep. Temperature, wave energy, and a silent buoy show
+            The live page is theirs to keep. Temperature, wave energy, and a silent buoy show
             up in a couple of seconds. The voice will say the water is rough, or that the node went
             dark. That is enough to pull a swim, keep people off a dock, or walk down and check the
             hull.
@@ -205,7 +205,7 @@ export function Deck() {
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
             The people in 16-foot boats are the ones who take the bar on a weekday. The motion
-            sensor samples 50 times a second. Tideline calls under 0.02 g calm and over 0.1 g rough. Buoy{" "}
+            sensor samples 50 times a second. Raylay calls under 0.02 g calm and over 0.1 g rough. Buoy{" "}
             {station.name} is at {station.waveRmsG.toFixed(3)} g and {station.tiltDeg.toFixed(1)}°
             tilt.
           </p>
@@ -228,7 +228,7 @@ export function Deck() {
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
               Put one node at the landing, one at the creek mouth, and one on the approach. #1 is
               out of radio range of the base, so it hands the packet to #2, #2 hands it to #3, and
-              #3 is close enough for the laptop. Same Tideline page.
+              #3 is close enough for the laptop. Same Raylay page.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-ink-2">
               If a fairing cracks, you print it again. If the probe dies, you order another
@@ -259,7 +259,7 @@ export function Deck() {
 
       <Slide id="end">
         <Pane>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Tideline</p>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Raylay</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-6xl">
             The page the landing can open
           </h2>
@@ -344,7 +344,7 @@ function MeshGraphic() {
       <Node x={48} y={118} title="#1" sub="Landing" />
       <Node x={148} y={118} title="#2" sub="Mouth" />
       <Node x={248} y={118} title="#3" sub="Approach" />
-      <Node x={348} y={70} title="Base" sub="Tideline" accent />
+      <Node x={348} y={70} title="Base" sub="Raylay" accent />
     </motion.svg>
   );
 }

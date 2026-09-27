@@ -54,7 +54,7 @@ export function LiveView({ payload }: { payload: TelemetryPayload }) {
             Live view
           </p>
           <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-            What Tideline shows
+            What Raylay shows
           </h2>
         </div>
         <p
@@ -68,8 +68,8 @@ export function LiveView({ payload }: { payload: TelemetryPayload }) {
       </div>
       <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">
         {live
-          ? `These are the fields coming off buoy ${reading.name} right now. Same water, air, pressure, wave energy, and tilt you get on Tideline.`
-          : "The buoy is not sending right now, so this panel is running an example packet with the same fields and the same scale Tideline uses."}
+          ? `These are the fields coming off buoy ${reading.name} right now. Same water, air, pressure, wave energy, and tilt you get on Raylay.`
+          : "The buoy is not sending right now, so this panel is running an example packet with the same fields and the same scale Raylay uses."}
       </p>
 
       <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

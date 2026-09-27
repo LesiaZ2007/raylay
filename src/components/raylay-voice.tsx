@@ -4,17 +4,17 @@ import { motion } from "motion/react";
 import { VOICE_THREAD } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-export function TidelineVoice() {
+export function RaylayVoice() {
   return (
     <div className="w-full">
       <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
-        Tideline voice
+        Raylay voice
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
         Ask it what the packet means
       </h2>
       <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">
-        The console is not just charts. The voice on Tideline flags a silent buoy, opens the wave
+        The console is not just charts. The voice on Raylay flags a silent buoy, opens the wave
         plot, and will say what 0.83 g does to a skiff.
       </p>
 
@@ -34,7 +34,7 @@ export function TidelineVoice() {
         <div className="bg-layer">
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <p className="font-mono text-[11px] tracking-[0.16em] text-ink uppercase">
-              Tideline voice
+              Raylay voice
             </p>
             <p className="font-mono text-[10px] text-accent">Listening</p>
           </div>
@@ -57,7 +57,7 @@ export function TidelineVoice() {
                         line.role === "you" ? "text-ink-3" : "text-accent",
                       )}
                     >
-                      {line.role === "you" ? "You" : "Tideline"}
+                      {line.role === "you" ? "You" : "Raylay"}
                     </p>
                     <p className="mt-1 text-[15px] leading-relaxed text-ink">{line.text}</p>
                   </div>

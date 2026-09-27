@@ -1,5 +1,5 @@
 import { LIVE_STATION_URL } from "@/lib/site";
-import { buildExample, readingFromTideline, type TelemetryPayload } from "@/lib/telemetry";
+import { buildExample, readingFromStation, type TelemetryPayload } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
 
@@ -11,7 +11,7 @@ export async function GET() {
       signal: AbortSignal.timeout(4000),
     });
     if (response.ok) {
-      const parsed = readingFromTideline((await response.json()) as unknown);
+      const parsed = readingFromStation((await response.json()) as unknown);
       if (parsed?.live) {
         const payload: TelemetryPayload = { source: "live", reading: parsed.reading };
         return Response.json(payload);
