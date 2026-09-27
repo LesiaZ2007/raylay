@@ -79,7 +79,7 @@ export function Deck() {
             An expensive buoy, replaced by one a community can take ownership of.
           </h2>
           <div className="mt-12 grid gap-px bg-border md:grid-cols-3">
-            <Gap label="To own one" them="$15,000–$50,000" us="A hull and parts" />
+            <Gap label="To own one" them="$15,000–$50,000" us="About $200" />
             <Gap label="Who owns it" them="A national network" us="A landing, a lake" />
             <Gap label="How fresh" them="Every 30 min" us="Every 2 sec" />
           </div>
@@ -115,7 +115,7 @@ export function Deck() {
             </li>
             <li>
               <span className="text-accent">A community</span> can afford the hull. $15,000 to $50,000
-              becomes parts their people can take ownership of and read.
+              becomes about $200 their people can take ownership of and read.
             </li>
           </ul>
           <p className="mt-12 max-w-3xl text-2xl font-light leading-snug tracking-tight text-ink md:text-3xl">
