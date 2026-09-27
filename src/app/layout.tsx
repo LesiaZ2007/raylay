@@ -1,35 +1,29 @@
 import type { Metadata } from "next";
-import { Fraunces, Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = IBM_Plex_Sans({
+  variable: "--font-plex-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
-});
-
-const fraunces = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
-  title: "Raylay — local water, public data",
+  title: "Raylay",
   description:
-    "Raylay is a low-cost sensor buoy that measures water temperature, wave height, and sea state, then relays the numbers to the people who have to decide whether the water is safe.",
+    "Manta-ray sensor buoys for water temperature, air, pressure, and wave energy. Live on Tideline.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${fraunces.variable} h-full scroll-smooth antialiased`}
-    >
-      <body className="min-h-full bg-background font-sans text-foreground">{children}</body>
+    <html lang="en" className={`${sans.variable} ${mono.variable} h-full scroll-smooth`}>
+      <body className="min-h-full bg-bg font-sans text-ink antialiased">{children}</body>
     </html>
   );
 }

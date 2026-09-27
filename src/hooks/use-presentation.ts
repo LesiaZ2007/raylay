@@ -17,11 +17,9 @@ export function usePresentation() {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) {
-          setActive(visible.target.id as SectionId);
-        }
+        if (visible?.target.id) setActive(visible.target.id as SectionId);
       },
-      { rootMargin: "-32% 0px -42% 0px", threshold: [0.2, 0.45, 0.7] },
+      { rootMargin: "-30% 0px -40% 0px", threshold: [0.25, 0.5] },
     );
 
     nodes.forEach((node) => observer.observe(node));

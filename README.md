@@ -1,26 +1,23 @@
 # Raylay
 
-A short scrolling talk for **Raylay**, a 3D-printed sensor buoy that measures water temperature and wave height and publishes the numbers.
+A short scrolling talk for the Raylay buoy mesh. The live console is [Tideline](https://raylay.amuhak.com).
 
-The live tracker is [raylay.amuhak.com](https://raylay.amuhak.com). If that host is down, the data slide uses a recorded session and says so.
+What the buoys actually report:
 
-This is meant to be presented, not clicked through. Scroll (or use the arrow keys / space) and talk to what’s on screen.
+- Water temperature (°C)
+- Air temperature (°C)
+- Pressure (hPa)
+- Wave energy RMS and peak (g)
+- Tilt (°)
+- GPS
 
-## The talk
+They hop packets over an ESP-NOW mesh to a base station. This site pulls the latest packet from `https://raylay.amuhak.com/api/nodes` and uses Tideline’s dark theme (`#161616` / `#08bdba`, IBM Plex).
 
-1. What we built
-2. Why cheap local measurements matter
-3. The RAY hull (the real print mesh)
-4. What’s inside
-5. What the data looks like
-6. Who actually uses this — boats, fishing, swimming, docks, flood-prone waterfronts, classrooms
-7. How you go from one buoy to a string of them
-
-## Run locally
+## Run
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://127.0.0.1:43127](http://127.0.0.1:43127).
+[http://127.0.0.1:43127](http://127.0.0.1:43127)
