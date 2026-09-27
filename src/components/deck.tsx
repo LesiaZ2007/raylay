@@ -104,7 +104,7 @@ export function Deck() {
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
             What this means on the water
           </h2>
-          <ul className="mt-10 max-w-3xl space-y-7 text-xl leading-relaxed text-ink-2 md:text-2xl">
+          <ul className="mt-10 max-w-3xl space-y-6 text-lg leading-relaxed text-ink-2 md:text-xl">
             <li>
               <span className="text-ink">A fisherman</span> sees temperature and waves at their own
               landing, said in ordinary words, and can ask what happened in the past couple of hours.
@@ -118,7 +118,7 @@ export function Deck() {
               becomes parts their people can take ownership of and read.
             </li>
           </ul>
-          <p className="mt-14 max-w-3xl text-3xl font-light leading-snug tracking-tight text-ink md:text-4xl">
+          <p className="mt-12 max-w-3xl text-2xl font-light leading-snug tracking-tight text-ink md:text-3xl">
             Local water, local numbers, clear enough for anyone on that shore.
           </p>
         </Pane>
