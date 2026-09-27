@@ -2,11 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "motion/react";
-import { useEffect, useState } from "react";
-import { Copy, Photo, Slide, Spark } from "@/components/fx";
+import { Field, Pane, Slide, Spark } from "@/components/fx";
+import { LiveView, useStation } from "@/components/live-view";
 import { usePresentation } from "@/hooks/use-presentation";
-import { LIVE_STATION_URL, SECTIONS, STATS } from "@/lib/site";
-import { LAST_PACKET, type TelemetryReading } from "@/lib/telemetry";
+import { COMPARE, LIVE_STATION_URL, PARTS, SECTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const BuoyViewer = dynamic(
@@ -14,40 +13,16 @@ const BuoyViewer = dynamic(
   { ssr: false, loading: () => <div className="h-full w-full bg-layer" /> },
 );
 
-function useStation() {
-  const [reading, setReading] = useState<TelemetryReading>(LAST_PACKET);
-
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      try {
-        const response = await fetch("/api/telemetry", { cache: "no-store" });
-        if (!response.ok) return;
-        const json = (await response.json()) as { reading: TelemetryReading };
-        if (!cancelled && json.reading) setReading(json.reading);
-      } catch {
-        // Keep the last good packet on screen.
-      }
-    };
-    void load();
-    const timer = window.setInterval(() => void load(), 8000);
-    return () => {
-      cancelled = true;
-      window.clearInterval(timer);
-    };
-  }, []);
-
-  return reading;
-}
-
 export function Deck() {
   const active = usePresentation();
-  const station = useStation();
+  const payload = useStation();
+  const station = payload.reading;
   const { scrollYProgress } = useScroll();
   const progress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="bg-bg text-ink">
+    <div className="relative bg-bg text-ink">
+      <Field />
       <motion.div
         aria-hidden
         className="fixed top-0 left-0 z-40 h-px bg-accent"
@@ -58,10 +33,7 @@ export function Deck() {
         <a href="#title" className="pointer-events-auto font-mono text-xs tracking-[0.16em] text-ink uppercase">
           Raylay
         </a>
-        <a
-          href={LIVE_STATION_URL}
-          className="pointer-events-auto font-mono text-xs text-accent"
-        >
+        <a href={LIVE_STATION_URL} className="pointer-events-auto font-mono text-xs text-accent">
           Tideline
         </a>
       </header>
@@ -78,221 +50,215 @@ export function Deck() {
         ))}
       </ol>
 
-      <Slide id="title" className="overflow-hidden">
-        <Photo src="/images/hero-water.png" alt="Dark open water" />
-        <Copy>
+      <Slide id="title">
+        <Pane>
           <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
-            Sensor buoy mesh
+            Part 1 · The hardware
           </p>
           <h1 className="mt-3 text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-2">
-            Printed manta-ray hulls with a water probe, air and pressure sensors, a 50 Hz motion
-            package, and GPS. They relay packets over ESP-NOW to a base station. Tideline is the
-            console that shows the fleet.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            A printed hull, an ESP32, and a handful of catalog sensors. They mesh over ESP-NOW and
+            show up on Tideline as water, air, pressure, wave energy, tilt, and GPS.
           </p>
-          <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
+          <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             <Metric label="Water" value={station.waterC.toFixed(1)} unit="°C" />
             <Metric label="Air" value={station.airC.toFixed(1)} unit="°C" />
             <Metric label="Waves" value={station.waveRmsG.toFixed(3)} unit="g" />
             <Metric label="Pressure" value={station.pressureHpa.toFixed(0)} unit="hPa" />
           </dl>
-          <Spark values={station.sparkWater} className="mt-6 h-9 w-56" />
+          <Spark values={station.sparkWater} className="mt-6 h-9 w-64" />
           <p className="mt-3 font-mono text-[11px] text-ink-3">
-            Buoy {station.name} on Tideline, last sixty water readings
+            {payload.source === "live"
+              ? `Live from buoy ${station.name}`
+              : `Example packet · buoy ${station.name} offline`}
           </p>
-        </Copy>
+        </Pane>
       </Slide>
 
-      <Slide id="why" className="bg-bg">
-        <div className="mx-auto flex min-h-[100svh] w-full max-w-5xl flex-col justify-center px-6 py-24 md:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ amount: 0.4, once: false }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
-              Why this matters
-            </p>
-            <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-              Most working water is still guessed at, and the official network is small.
-            </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-              NOAA’s National Data Buoy Center runs about 200 buoys for the whole country, plus a
-              few dozen shore stations. Those instruments are excellent. They are also expensive to
-              site and keep on station, so they sit on shipping lanes and research lines. Harbors,
-              rivers, and community docks rarely get one.
-            </p>
-          </motion.div>
-          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {STATS.map((stat, i) => (
-              <motion.div
-                key={stat.value}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ amount: 0.4, once: false }}
-                transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="border-t border-border pt-4"
-              >
-                <p className="text-4xl font-light text-accent">{stat.value}</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink-2">{stat.label}</p>
-                <p className="mt-2 font-mono text-[10px] text-ink-3">{stat.source}</p>
-              </motion.div>
+      <Slide id="how">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+            How it works
+          </p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            These are the parts
+          </h2>
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">
+            The ESP32 reads the probe and the breakout boards, then hops a small packet to the next
+            buoy or to the laptop that runs Tideline.
+          </p>
+          <div className="mt-10 grid gap-px bg-border sm:grid-cols-2">
+            {PARTS.map((part) => (
+              <div key={part.name} className="bg-bg px-5 py-5">
+                <p className="font-mono text-xs text-accent">{part.name}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{part.job}</p>
+              </div>
             ))}
           </div>
-        </div>
+        </Pane>
       </Slide>
 
-      <Slide id="fishing" className="overflow-hidden">
-        <Photo src="/images/fishing.png" alt="Workboats in a harbor" />
-        <Copy>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Fishing</p>
-          <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-6xl">
-            $138 billion, and it still runs on local water
-          </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-2">
-            In 2022, U.S. recreational saltwater fishing generated $138 billion in sales and
-            supported about 692,000 jobs. Anglers took 201 million trips. Temperature is one of the
-            first things those trips depend on. It moves bait and gamefish through the water column,
-            and crews already watch it when they have it.
-          </p>
-          <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-2">
-            Buoy {station.name} is reading {station.waterC.toFixed(1)}°C. A group of hulls along a
-            creek mouth or a bank can show a gradient, which is what a single offshore station
-            cannot do for a harbor.
-          </p>
-        </Copy>
-      </Slide>
-
-      <Slide id="conservation" className="overflow-hidden">
-        <Photo src="/images/conservation.png" alt="Coastal marsh at dusk" />
-        <Copy>
+      <Slide id="compare">
+        <Pane>
           <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
-            Conservation
+            Why it is cheap enough to own
           </p>
-          <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-6xl">
-            Blooms show up as heat before they show up as closures
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Official buoys are good. They are also a capital project.
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-2">
-            The 2015 West Coast harmful algal bloom cut Dungeness crab landings by $97 million
-            from the year before. Washington’s coastal towns lost about $40 million in tourism when
-            the razor clam season closed. On Lake Erie, researchers estimated recreational anglers
-            would lose $59 million a year if the western basin had to shut.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            A commercial directional waverider usually costs $15,000 to $50,000. NOAA’s whole NDBC
+            network is about 200 buoys. That is why a harbor or a river landing almost never gets
+            one. Raylay is a print job and a parts order.
           </p>
-          <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-2">
-            Those events track with water temperature and weather. A mesh gives you the same fields
-            at more points, so a heat spike is a pattern on a map instead of one lucky sample.
-          </p>
-        </Copy>
+          <div className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-left text-sm">
+              <thead className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">
+                <tr className="border-b border-border">
+                  <th className="py-3 pr-4 font-medium"> </th>
+                  <th className="py-3 pr-4 font-medium">Typical waverider / NDBC</th>
+                  <th className="py-3 font-medium text-accent">Raylay</th>
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARE.map((row) => (
+                  <tr key={row.topic} className="border-b border-border align-top">
+                    <td className="py-4 pr-4 text-ink-3">{row.topic}</td>
+                    <td className="py-4 pr-6 text-ink-2">{row.them}</td>
+                    <td className="py-4 text-ink">{row.us}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Pane>
       </Slide>
 
-      <Slide id="boats" className="overflow-hidden">
-        <Photo src="/images/boats.png" alt="Small boat in chop" />
-        <Copy>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Small boats</p>
-          <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-6xl">
-            50 samples a second, then a simple scale
-          </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-2">
-            The IMU logs motion at 50 Hz. Tideline reports wave energy in g. Below 0.02 g the water
-            is calm. Above 0.1 g it is rough. Buoy {station.name} is at {station.waveRmsG.toFixed(3)} g
-            with {station.tiltDeg.toFixed(1)}° of tilt.
-          </p>
-          <p className="mt-4 max-w-md text-lg leading-relaxed text-ink-2">
-            NOAA’s coastal weather buoys measure waves for shipping and forecasts. A string of
-            Raylay nodes can sit at a bar, a marina entrance, and a sheltered basin at the same
-            time, which is the scale small craft actually use.
-          </p>
-        </Copy>
+      <Slide id="live">
+        <Pane>
+          <LiveView payload={payload} />
+        </Pane>
       </Slide>
 
-      <Slide id="mesh" className="bg-bg">
-        <div className="mx-auto grid min-h-[100svh] w-full max-w-5xl items-center gap-12 px-6 py-24 md:grid-cols-2 md:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ amount: 0.4, once: false }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
+      <Slide id="fishing">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+            Part 2 · Who this is for
+          </p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Crews who eat what they catch
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            Recreational saltwater fishing was $138 billion in U.S. sales in 2022, but the people
+            who feel a bad week first are small crews and subsistence fishers on landings that never
+            get an NDBC siting. Water temperature is the number they already use when they can get
+            it. It moves bait and tells you when a stretch has gone stale.
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+            After the 2015 West Coast bloom, Dungeness crab landings dropped $97 million and
+            Washington’s coastal towns lost about $40 million in tourism when the razor clam season
+            closed. Buoy {station.name} is at {station.waterC.toFixed(1)}°C. A DS18B20 on a public
+            page is how a landing gets that number without a grant office.
+          </p>
+        </Pane>
+      </Slide>
+
+      <Slide id="neighborhoods">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+            Neighborhoods
+          </p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            The places that flood and cook first
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            Low-income waterfronts and neighborhoods downstream of industry see runoff, sewage
+            overflows, and heat in the basin before anyone publishes a report. They also get sensors
+            last. On Lake Erie, researchers put $59 million a year of recreational fishing value at
+            risk if the western basin had to close after blooms.
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+            A DS18B20 and a BMP280 will not replace a chemistry lab. They will tell a clinic, a
+            church group, or a high-school team that the water jumped two degrees. Tideline is a
+            URL. There is no research login.
+          </p>
+        </Pane>
+      </Slide>
+
+      <Slide id="boats">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Getting out</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Water taxis, skiffs, and unpaid crossings
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            The people in 16-foot boats are the ones who take the bar on a weekday. The MPU6050
+            samples 50 times a second. Tideline calls under 0.02 g calm and over 0.1 g rough. Buoy{" "}
+            {station.name} is at {station.waveRmsG.toFixed(3)} g and {station.tiltDeg.toFixed(1)}°
+            tilt.
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+            That is a go or stay number for a water taxi, a kid in a skiff, or someone who crosses
+            because the bridge is the long way. You need a node at the mouth you can afford to lose.
+          </p>
+        </Pane>
+      </Slide>
+
+      <Slide id="mesh">
+        <Pane className="md:grid md:grid-cols-2 md:items-center md:gap-12">
+          <div>
             <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
               A group of them
             </p>
             <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-              One hull is a station. Several hulls are coverage.
+              Three cheap nodes beat one station you will never get
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              Each buoy can forward another buoy’s packet over ESP-NOW. Units out of range of the
-              laptop still arrive through a neighbor. Tideline already treats them as a fleet:
-              buoy {station.name}, a named base, and a shared chart.
+              ESP-NOW lets a buoy out of range of the laptop hand its packet to a neighbor. A co-op
+              can put one hull at the landing, one at the creek mouth, and one on the approach. Same
+              Tideline page.
             </p>
-            <ul className="mt-8 space-y-4 text-ink-2">
-              <li>
-                <span className="text-ink">Along a shoreline.</span> Temperature and wave energy
-                change over a few hundred meters. Three nodes turn that into a line, which is enough
-                to see a warm pocket or a rough entrance.
-              </li>
-              <li>
-                <span className="text-ink">Up a river or creek.</span> Heat and runoff move
-                downstream. A short string of cheap stations is how a school or a co-op watches a
-                stretch NOAA will never instrument.
-              </li>
-              <li>
-                <span className="text-ink">Around a working dock.</span> One unit at the mouth, one
-                in the basin, one on the approach. Same website, more points, same two-second
-                packets.
-              </li>
-            </ul>
-          </motion.div>
+            <p className="mt-4 text-lg leading-relaxed text-ink-2">
+              If a fairing cracks, you print it again. If the probe dies, you order another DS18B20.
+              The fleet stays in the water because the people who use it can fix it.
+            </p>
+          </div>
           <MeshGraphic />
-        </div>
+        </Pane>
       </Slide>
 
-      <Slide id="hull" className="bg-bg">
-        <div className="mx-auto grid min-h-[100svh] w-full max-w-6xl items-center gap-8 px-6 py-24 md:grid-cols-2 md:px-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ amount: 0.4, once: false }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
+      <Slide id="hull">
+        <Pane className="md:grid md:grid-cols-2 md:items-center md:gap-10">
+          <div>
             <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">RAY</p>
             <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-              The print file, framed
+              The hull those parts sit in
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              This is the actual hull mesh, about 26 cm across and 9 cm tall. Drag to turn it. The
-              shape is the manta-ray body the radios and probes sit in. If a fairing cracks, you
-              print that piece again and put the bay back in the water.
+              This is the print file, about 26 cm across. Drag to turn it. The bay holds the ESP32,
+              the LiPo, and the breakouts. The DS18B20 exits into the water.
             </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ amount: 0.35, once: false }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="aspect-square w-full bg-layer p-6 md:p-10"
-          >
+          </div>
+          <div className="mt-10 aspect-square w-full bg-layer p-6 md:mt-0 md:p-10">
             <BuoyViewer className="h-full w-full" />
-          </motion.div>
-        </div>
+          </div>
+        </Pane>
       </Slide>
 
-      <Slide id="end" className="overflow-hidden">
-        <div className="absolute inset-0 bg-bg" />
-        <div className="absolute inset-y-0 right-0 hidden w-[42%] bg-water md:block" />
-        <Copy>
+      <Slide id="end">
+        <Pane>
           <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Tideline</p>
-          <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-6xl">
-            The fleet view is already up
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-6xl">
+            The page the landing can open
           </h2>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-2">
-            Map, sparklines, and the same fields you see here: water, air, pressure, wave energy,
-            tilt, and GPS. Add hulls and the page gets denser. That is the whole idea.
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            Map, charts, and the packet from buoy {station.name}. Add hulls and the neighborhood
+            gets a line of numbers instead of a gap on the official map.
           </p>
           <p className="mt-10 font-mono text-sm text-accent">
             {LIVE_STATION_URL.replace("https://", "")}
           </p>
-        </Copy>
+        </Pane>
       </Slide>
     </div>
   );
@@ -312,11 +278,11 @@ function Metric({ label, value, unit }: { label: string; value: string; unit: st
 
 function MeshGraphic() {
   const nodes = [
-    { x: 16, y: 62, label: "Mouth" },
-    { x: 38, y: 40, label: "#1" },
-    { x: 58, y: 58, label: "Basin" },
-    { x: 74, y: 28, label: "#3" },
-    { x: 88, y: 48, label: "Base" },
+    { x: 18, y: 60, label: "Landing" },
+    { x: 40, y: 38, label: "#1" },
+    { x: 58, y: 58, label: "Mouth" },
+    { x: 76, y: 30, label: "#3" },
+    { x: 88, y: 50, label: "Base" },
   ];
   const links = [
     [0, 1],
@@ -329,7 +295,7 @@ function MeshGraphic() {
   return (
     <motion.svg
       viewBox="0 0 100 80"
-      className="h-64 w-full md:h-80"
+      className="mt-10 h-56 w-full md:mt-0 md:h-80"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ amount: 0.4, once: false }}

@@ -1,5 +1,5 @@
 import { LIVE_STATION_URL } from "@/lib/site";
-import { LAST_PACKET, readingFromTideline, type TelemetryPayload } from "@/lib/telemetry";
+import { buildExample, readingFromTideline, type TelemetryPayload } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
 
@@ -11,16 +11,18 @@ export async function GET() {
       signal: AbortSignal.timeout(4000),
     });
     if (response.ok) {
-      const raw = (await response.json()) as unknown;
-      const reading = readingFromTideline(raw);
-      if (reading) {
-        const payload: TelemetryPayload = { reading };
+      const parsed = readingFromTideline((await response.json()) as unknown);
+      if (parsed?.live) {
+        const payload: TelemetryPayload = { source: "live", reading: parsed.reading };
         return Response.json(payload);
       }
     }
   } catch {
-    // Fall through to the last known packet.
+    // Fall through to the labeled example.
   }
 
-  return Response.json({ reading: LAST_PACKET } satisfies TelemetryPayload);
+  return Response.json({
+    source: "example",
+    reading: buildExample(),
+  } satisfies TelemetryPayload);
 }

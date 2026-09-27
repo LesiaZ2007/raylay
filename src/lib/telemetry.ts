@@ -8,9 +8,12 @@ export type TelemetryReading = {
   tiltDeg: number;
   sparkWater: number[];
   sparkWaves: number[];
+  sparkAir: number[];
+  sparkTilt: number[];
 };
 
 export type TelemetryPayload = {
+  source: "live" | "example";
   reading: TelemetryReading;
 };
 
@@ -43,7 +46,15 @@ function numbers(value: unknown): number[] {
   return value.filter((n): n is number => typeof n === "number" && Number.isFinite(n));
 }
 
-export function readingFromTideline(raw: unknown): TelemetryReading | null {
+function isFresh(node: Record<string, unknown>) {
+  const status = typeof node.status === "string" ? node.status : "";
+  if (status === "offline" || status === "unknown" || status === "stale") return false;
+  if (status === "online" || status === "ok" || status === "live") return true;
+  const age = asNumber(node.age_s);
+  return age !== null && age < 20;
+}
+
+export function readingFromTideline(raw: unknown): { reading: TelemetryReading; live: boolean } | null {
   const root = asRecord(raw);
   if (!root) return null;
 
@@ -58,28 +69,54 @@ export function readingFromTideline(raw: unknown): TelemetryReading | null {
   if (waterC === null) return null;
 
   return {
-    name: typeof node.name === "string" ? node.name : "#1",
-    waterC,
-    airC: pick(latest, ["air_c"]) ?? 0,
-    pressureHpa: pick(latest, ["pressure_hpa"]) ?? 0,
-    waveRmsG: pick(latest, ["wave_rms_g"]) ?? 0,
-    wavePeakG: pick(latest, ["wave_peak_g"]) ?? 0,
-    tiltDeg: pick(latest, ["tilt"]) ?? 0,
-    sparkWater: numbers(spark?.water_c),
-    sparkWaves: numbers(spark?.wave_rms_g),
+    live: isFresh(node),
+    reading: {
+      name: typeof node.name === "string" ? node.name : "#1",
+      waterC,
+      airC: pick(latest, ["air_c"]) ?? 0,
+      pressureHpa: pick(latest, ["pressure_hpa"]) ?? 0,
+      waveRmsG: pick(latest, ["wave_rms_g"]) ?? 0,
+      wavePeakG: pick(latest, ["wave_peak_g"]) ?? 0,
+      tiltDeg: pick(latest, ["tilt"]) ?? 0,
+      sparkWater: numbers(spark?.water_c),
+      sparkWaves: numbers(spark?.wave_rms_g),
+      sparkAir: numbers(spark?.air_c),
+      sparkTilt: numbers(spark?.tilt),
+    },
   };
 }
 
-export const LAST_PACKET: TelemetryReading = {
-  name: "#1",
-  waterC: 21.12,
-  airC: 23.89,
-  pressureHpa: 982.43,
-  waveRmsG: 0.015,
-  wavePeakG: 0.079,
-  tiltDeg: 3.79,
-  sparkWater: [
-    21.25, 21.31, 21.25, 21.18, 21.12, 21.18, 21.18, 21.12, 21.18, 21.12,
-  ],
-  sparkWaves: [0, 0.001, 0.058, 0.002, 0, 0.001, 0, 0, 0, 0.015],
-};
+export function buildExample(now = Date.now()): TelemetryReading {
+  const points = 48;
+  const sparkWater: number[] = [];
+  const sparkWaves: number[] = [];
+  const sparkAir: number[] = [];
+  const sparkTilt: number[] = [];
+  const step = 2000;
+
+  for (let i = 0; i < points; i++) {
+    const t = (now - (points - 1 - i) * step) / 1000;
+    sparkWater.push(Number((21.35 + 0.22 * Math.sin(t / 38) + 0.05 * Math.sin(t / 9)).toFixed(2)));
+    sparkWaves.push(
+      Number(Math.max(0.004, 0.028 + 0.018 * Math.sin(t / 7) + 0.01 * Math.sin(t / 2.4)).toFixed(3)),
+    );
+    sparkAir.push(Number((23.6 + 0.18 * Math.sin(t / 50)).toFixed(2)));
+    sparkTilt.push(Number((3.4 + 0.35 * Math.sin(t / 6)).toFixed(2)));
+  }
+
+  return {
+    name: "#1",
+    waterC: sparkWater[sparkWater.length - 1] ?? 21.35,
+    airC: sparkAir[sparkAir.length - 1] ?? 23.6,
+    pressureHpa: Number((982.2 + 0.15 * Math.sin(now / 20000)).toFixed(2)),
+    waveRmsG: sparkWaves[sparkWaves.length - 1] ?? 0.028,
+    wavePeakG: Number(((sparkWaves[sparkWaves.length - 1] ?? 0.028) * 4.2).toFixed(3)),
+    tiltDeg: sparkTilt[sparkTilt.length - 1] ?? 3.4,
+    sparkWater,
+    sparkWaves,
+    sparkAir,
+    sparkTilt,
+  };
+}
+
+export const LAST_PACKET = buildExample(1_790_487_000_000);

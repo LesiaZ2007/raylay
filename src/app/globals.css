@@ -16,6 +16,8 @@
   --color-accent: #08bdba;
   --color-accent-hi: #3ddbd9;
   --color-water: #0b3b3c;
+  --color-success: #42be65;
+  --color-warning: #f1c21b;
   --color-border: #393939;
   --color-background: #161616;
   --color-foreground: #f4f4f4;
@@ -51,6 +53,7 @@
   html {
     background: #161616;
     color-scheme: dark;
+    overflow-x: clip;
   }
 
   @media (min-width: 1024px) {
@@ -68,7 +71,21 @@
   body {
     background: #161616;
     color: #f4f4f4;
+    overflow-x: clip;
   }
+}
+
+.tide-grid {
+  background-color: #161616;
+  background-image:
+    linear-gradient(#ffffff0a 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff0a 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+}
+
+.tide-water {
+  background: linear-gradient(180deg, transparent 0%, #0b3b3c 72%, #083032 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
