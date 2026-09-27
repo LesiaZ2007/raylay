@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Field, Pane, Slide, Spark } from "@/components/fx";
 import { LiveView, useStation } from "@/components/live-view";
+import { TidelineVoice } from "@/components/tideline-voice";
 import { usePresentation } from "@/hooks/use-presentation";
 import { COMPARE, LIVE_STATION_URL, PARTS, SECTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -57,7 +58,7 @@ export function Deck() {
           </p>
           <h1 className="mt-3 text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            A printed hull, an ESP32, and a handful of catalog sensors. They mesh over ESP-NOW and
+            A printed hull, a board, and a handful of catalog sensors. They mesh over ESP-NOW and
             show up on Tideline as water, air, pressure, wave energy, tilt, and GPS.
           </p>
           <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
@@ -84,8 +85,8 @@ export function Deck() {
             These are the parts
           </h2>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-2">
-            The ESP32 reads the probe and the breakout boards, then hops a small packet to the next
-            buoy or to the laptop that runs Tideline.
+            The board reads the temperature probe and the other sensors, then hops a small packet
+            to the next buoy or to the laptop that runs Tideline.
           </p>
           <div className="mt-10 grid gap-px bg-border sm:grid-cols-2">
             {PARTS.map((part) => (
@@ -140,25 +141,30 @@ export function Deck() {
         </Pane>
       </Slide>
 
+      <Slide id="assistant">
+        <Pane>
+          <TidelineVoice />
+        </Pane>
+      </Slide>
+
       <Slide id="fishing">
         <Pane>
           <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
             Part 2 · Who this is for
           </p>
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-            Crews who eat what they catch
+            Fishing already runs on water temperature
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            Recreational saltwater fishing was $138 billion in U.S. sales in 2022, but the people
-            who feel a bad week first are small crews and subsistence fishers on landings that never
-            get an NDBC siting. Water temperature is the number they already use when they can get
-            it. It moves bait and tells you when a stretch has gone stale.
+            Saltwater fishing put $138 billion into U.S. sales in 2022, across 201 million trips.
+            Those trips still start with how the water is. Temperature moves bait. Wave energy
+            decides if a 22-foot charter leaves the inlet. NOAA’s NDBC network is about 200 buoys,
+            sited for shipping lanes and forecasts. A municipal dock or a creek-mouth landing is
+            not on that list.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
-            After the 2015 West Coast bloom, Dungeness crab landings dropped $97 million and
-            Washington’s coastal towns lost about $40 million in tourism when the razor clam season
-            closed. Buoy {station.name} is at {station.waterC.toFixed(1)}°C. A DS18B20 on a public
-            page is how a landing gets that number without a grant office.
+            Buoy {station.name} is at {station.waterC.toFixed(1)}°C. That is the number a dock
+            already wants. Tideline puts it on a page for the harbor that actually uses it.
           </p>
         </Pane>
       </Slide>
@@ -169,18 +175,24 @@ export function Deck() {
             Neighborhoods
           </p>
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-            The places that flood and cook first
+            Their water. Their node. Their call.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            Low-income waterfronts and neighborhoods downstream of industry see runoff, sewage
-            overflows, and heat in the basin before anyone publishes a report. They also get sensors
-            last. On Lake Erie, researchers put $59 million a year of recreational fishing value at
-            risk if the western basin had to close after blooms.
+            Flood-prone waterfronts and blocks downstream of a plant get official buoys last. Kids
+            still swim. People still cross. They find out the water turned from a county post, or
+            they do not find out.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
-            A DS18B20 and a BMP280 will not replace a chemistry lab. They will tell a clinic, a
-            church group, or a high-school team that the water jumped two degrees. Tideline is a
-            URL. There is no research login.
+            Raylay is cheap enough that the neighborhood puts a hull in the water it actually uses.
+            Tideline is a public page they keep. Temperature, wave energy, and a silent buoy show
+            up in a couple of seconds. The voice will say the water is rough, or that the node went
+            dark. That is enough to pull a swim, keep people off a dock, or walk down and check the
+            hull.
+          </p>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+            They buy the parts. They print the fairing. They own the URL. If it breaks, they fix it.
+            The safety call stays with the people who live there, not with a report written about
+            someone else’s water.
           </p>
         </Pane>
       </Slide>
@@ -192,8 +204,8 @@ export function Deck() {
             Water taxis, skiffs, and unpaid crossings
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            The people in 16-foot boats are the ones who take the bar on a weekday. The MPU6050
-            samples 50 times a second. Tideline calls under 0.02 g calm and over 0.1 g rough. Buoy{" "}
+            The people in 16-foot boats are the ones who take the bar on a weekday. The motion
+            sensor samples 50 times a second. Tideline calls under 0.02 g calm and over 0.1 g rough. Buoy{" "}
             {station.name} is at {station.waveRmsG.toFixed(3)} g and {station.tiltDeg.toFixed(1)}°
             tilt.
           </p>
@@ -211,36 +223,36 @@ export function Deck() {
               A group of them
             </p>
             <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-              Three cheap nodes beat one station you will never get
+              The landing cannot reach the laptop. The next hull can.
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              ESP-NOW lets a buoy out of range of the laptop hand its packet to a neighbor. A co-op
-              can put one hull at the landing, one at the creek mouth, and one on the approach. Same
-              Tideline page.
+              Put one node at the landing, one at the creek mouth, and one on the approach. #1 is
+              out of radio range of the base, so it hands the packet to #2, #2 hands it to #3, and
+              #3 is close enough for the laptop. Same Tideline page.
             </p>
             <p className="mt-4 text-lg leading-relaxed text-ink-2">
-              If a fairing cracks, you print it again. If the probe dies, you order another DS18B20.
-              The fleet stays in the water because the people who use it can fix it.
+              If a fairing cracks, you print it again. If the probe dies, you order another
+              temperature sensor. The fleet stays up because the people who use it can fix it.
             </p>
           </div>
           <MeshGraphic />
         </Pane>
       </Slide>
 
-      <Slide id="hull">
-        <Pane className="md:grid md:grid-cols-2 md:items-center md:gap-10">
-          <div>
+      <Slide id="hull" className="overflow-hidden">
+        <div className="absolute inset-0 z-[1] md:left-[32%] lg:left-[28%]">
+          <BuoyViewer className="h-full w-full" />
+        </div>
+        <Pane>
+          <div className="relative z-[2] max-w-md">
             <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">RAY</p>
             <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
               The hull those parts sit in
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              This is the print file, about 26 cm across. Drag to turn it. The bay holds the ESP32,
-              the LiPo, and the breakouts. The DS18B20 exits into the water.
+              This is the print file, about 26 cm across. The bay holds the board, the battery, and
+              the sensors. The temperature probe exits into the water.
             </p>
-          </div>
-          <div className="mt-10 aspect-square w-full bg-layer p-6 md:mt-0 md:p-10">
-            <BuoyViewer className="h-full w-full" />
           </div>
         </Pane>
       </Slide>
@@ -252,8 +264,9 @@ export function Deck() {
             The page the landing can open
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            Map, charts, and the packet from buoy {station.name}. Add hulls and the neighborhood
-            gets a line of numbers instead of a gap on the official map.
+            Map, charts, and a voice that will say when buoy {station.name} went silent or the
+            water turned rough. Add hulls and the harbor gets a line of numbers instead of a gap
+            on the official map.
           </p>
           <p className="mt-10 font-mono text-sm text-accent">
             {LIVE_STATION_URL.replace("https://", "")}
@@ -277,68 +290,116 @@ function Metric({ label, value, unit }: { label: string; value: string; unit: st
 }
 
 function MeshGraphic() {
-  const nodes = [
-    { x: 18, y: 60, label: "Landing" },
-    { x: 40, y: 38, label: "#1" },
-    { x: 58, y: 58, label: "Mouth" },
-    { x: 76, y: 30, label: "#3" },
-    { x: 88, y: 50, label: "Base" },
-  ];
-  const links = [
-    [0, 1],
-    [1, 2],
-    [1, 3],
-    [2, 4],
-    [3, 4],
-  ];
+  const hops = "M 48 118 H 148 H 248 H 348";
 
   return (
     <motion.svg
-      viewBox="0 0 100 80"
+      viewBox="0 0 400 220"
       className="mt-10 h-56 w-full md:mt-0 md:h-80"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ amount: 0.4, once: false }}
-      transition={{ duration: 0.8 }}
-      aria-hidden
+      viewport={{ amount: 0.35, once: false }}
+      transition={{ duration: 0.6 }}
+      role="img"
+      aria-label="Packet hops from the landing to the mouth, then the approach, then the laptop."
     >
-      {links.map(([a, b], i) => (
-        <motion.line
-          key={`${a}-${b}`}
-          x1={nodes[a].x}
-          y1={nodes[a].y}
-          x2={nodes[b].x}
-          y2={nodes[b].y}
-          stroke="#08bdba"
-          strokeOpacity="0.45"
-          strokeWidth="0.45"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ amount: 0.4, once: false }}
-          transition={{ duration: 0.9, delay: 0.1 * i }}
-        />
-      ))}
-      {nodes.map((node, i) => (
-        <motion.g
-          key={node.label}
-          initial={{ opacity: 0, scale: 0.6 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ amount: 0.4, once: false }}
-          transition={{ duration: 0.45, delay: 0.12 * i }}
-        >
-          <circle cx={node.x} cy={node.y} r="3.2" fill={i === 4 ? "#08bdba" : "#f4f4f4"} />
-          <text
-            x={node.x}
-            y={node.y - 5.5}
-            textAnchor="middle"
-            fill="#8d8d8d"
-            fontSize="3.4"
-            fontFamily="IBM Plex Mono, monospace"
-          >
-            {node.label}
-          </text>
-        </motion.g>
-      ))}
+      <path d="M 8 168 C 90 156, 170 176, 250 160 S 340 148, 392 158 V 220 H 8 Z" fill="#0b3b3c" />
+      <path
+        d="M 8 168 C 90 156, 170 176, 250 160 S 340 148, 392 158"
+        fill="none"
+        stroke="#08bdba"
+        strokeOpacity="0.35"
+        strokeWidth="1.2"
+      />
+
+      <line
+        x1="48"
+        y1="118"
+        x2="348"
+        y2="70"
+        stroke="#8d8d8d"
+        strokeDasharray="4 5"
+        strokeWidth="1.2"
+      />
+      <text
+        x="198"
+        y="78"
+        textAnchor="middle"
+        fill="#8d8d8d"
+        fontSize="11"
+        fontFamily="IBM Plex Mono, monospace"
+      >
+        out of range
+      </text>
+
+      <path d={hops} fill="none" stroke="#08bdba" strokeWidth="1.8" />
+      <HopLabel x={98} y={108} text="hop" />
+      <HopLabel x={198} y={108} text="hop" />
+      <HopLabel x={298} y={108} text="in range" />
+
+      <circle r="5" fill="#3ddbd9">
+        <animateMotion dur="3.4s" repeatCount="indefinite" path={hops} rotate="0" />
+      </circle>
+
+      <Node x={48} y={118} title="#1" sub="Landing" />
+      <Node x={148} y={118} title="#2" sub="Mouth" />
+      <Node x={248} y={118} title="#3" sub="Approach" />
+      <Node x={348} y={70} title="Base" sub="Tideline" accent />
     </motion.svg>
+  );
+}
+
+function HopLabel({ x, y, text }: { x: number; y: number; text: string }) {
+  return (
+    <text
+      x={x}
+      y={y}
+      textAnchor="middle"
+      fill="#08bdba"
+      fontSize="10"
+      fontFamily="IBM Plex Mono, monospace"
+    >
+      {text}
+    </text>
+  );
+}
+
+function Node({
+  x,
+  y,
+  title,
+  sub,
+  accent = false,
+}: {
+  x: number;
+  y: number;
+  title: string;
+  sub: string;
+  accent?: boolean;
+}) {
+  return (
+    <g>
+      <circle cx={x} cy={y} r="8" fill={accent ? "#08bdba" : "#f4f4f4"} />
+      <text
+        x={x}
+        y={y - 22}
+        textAnchor="middle"
+        fill="#f4f4f4"
+        fontSize="13"
+        fontFamily="IBM Plex Sans, sans-serif"
+      >
+        {title}
+      </text>
+      <text
+        x={x}
+        y={y + 26}
+        textAnchor="middle"
+        fill="#8d8d8d"
+        fontSize="11"
+        fontFamily="IBM Plex Mono, monospace"
+      >
+        {sub}
+      </text>
+    </g>
   );
 }
