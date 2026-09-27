@@ -112,8 +112,8 @@ export function buildReplayReading(now = Date.now()): TelemetryReading {
     ),
     wavePeriodS: Number((5.1 + 0.45 * Math.sin(t / 13)).toFixed(2)),
     batteryPct: 86,
-    lat: 33.749,
-    lon: -84.388,
+    lat: Number.NaN,
+    lon: Number.NaN,
     recordedAt: new Date(now).toISOString(),
   };
 }

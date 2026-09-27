@@ -347,7 +347,9 @@ export function LiveSection() {
                 <Row
                   label="Fix"
                   value={
-                    reading ? `${reading.lat.toFixed(3)}, ${reading.lon.toFixed(3)}` : "—"
+                    reading && Number.isFinite(reading.lat) && Number.isFinite(reading.lon)
+                      ? `${reading.lat.toFixed(3)}, ${reading.lon.toFixed(3)}`
+                      : "Held for replay"
                   }
                 />
                 <Row
