@@ -106,15 +106,15 @@ export function Deck() {
           </h2>
           <ul className="mt-10 max-w-3xl space-y-6 text-lg leading-relaxed text-ink-2 md:text-xl">
             <li>
-              <span className="text-ink">A fisherman</span> sees temperature and waves at their own
+              <span className="text-accent">A fisherman</span> sees temperature and waves at their own
               landing, said in ordinary words, and can ask what happened in the past couple of hours.
             </li>
             <li>
-              <span className="text-ink">A conservation group</span> gets a local record of quiet
+              <span className="text-accent">A conservation group</span> gets a local record of quiet
               water, rough patches, and impact warnings without a specialist portal.
             </li>
             <li>
-              <span className="text-ink">A community</span> can afford the hull. $15,000 to $50,000
+              <span className="text-accent">A community</span> can afford the hull. $15,000 to $50,000
               becomes parts their people can take ownership of and read.
             </li>
           </ul>

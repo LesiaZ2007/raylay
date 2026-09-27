@@ -13,12 +13,12 @@ export function RaylayVoice() {
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
         Ask what you should take note of
       </h2>
-      <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-ink-2">
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-2 md:text-lg">
         “What’s happened in the past couple of hours that I should take note of?” It answers in
         the same words a fisherman or a crew would use.
       </p>
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
-        <ol className="space-y-6">
+        <ol className="space-y-7">
           <Beat n="01" title="Silent, named">
             Two gaps on buoy one, six and twelve minutes ago, before anyone scrolls a plot.
           </Beat>
@@ -79,7 +79,7 @@ function Beat({ n, title, children }: { n: string; title: string; children: stri
       <p className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">
         {n} · {title}
       </p>
-      <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{children}</p>
+      <p className="mt-2 text-lg leading-relaxed text-ink-2 md:text-xl">{children}</p>
     </li>
   );
 }
