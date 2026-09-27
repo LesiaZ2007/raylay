@@ -75,10 +75,10 @@ export function Deck() {
             Cheap enough to own the reading
           </p>
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-            An expensive buoy, replaced by a print.
+            An expensive buoy, replaced by one anyone can build.
           </h2>
           <div className="mt-12 grid gap-px bg-border md:grid-cols-3">
-            <Gap label="To own one" them="$15,000–$50,000" us="A print and parts" />
+            <Gap label="To own one" them="$15,000–$50,000" us="A hull and parts" />
             <Gap label="How many" them="~200 for the country" us="Wherever you need one" />
             <Gap label="How fresh" them="Every 30 min" us="Every 2 sec" />
           </div>
