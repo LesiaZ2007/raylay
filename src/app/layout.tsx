@@ -17,7 +17,7 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Raylay",
   description:
-    "A cheaper buoy network anyone can place. The numbers come back in plain language.",
+    "A cheaper buoy network anyone can place. The numbers come back for anyone watching the water.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

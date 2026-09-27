@@ -11,7 +11,7 @@ export function RaylayVoice() {
         Raylay voice
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-        The number, said so anyone can use it
+        What the number means
       </h2>
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
         <ol className="space-y-6">

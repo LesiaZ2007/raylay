@@ -58,8 +58,8 @@ export function Deck() {
         <Pane>
           <h1 className="text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            A cheaper buoy network anyone can place. The numbers come back in plain language, for a
-            fisherman, a conservation crew, or anyone else watching the water.
+            A cheaper buoy network anyone can place. The numbers come back for a fisherman, a
+            conservation crew, or anyone else watching the water.
           </p>
         </Pane>
       </Slide>

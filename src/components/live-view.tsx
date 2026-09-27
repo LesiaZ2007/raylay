@@ -10,7 +10,7 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
       <div>
         <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Live view</p>
         <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-          The numbers, in plain language
+          The numbers
         </h2>
         <p className="mt-5 font-mono text-[11px] text-ink-3">Reading the buoy</p>
       </div>
@@ -29,7 +29,7 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
             Live view
           </p>
           <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-            The numbers, in plain language
+            The numbers
           </h2>
         </div>
         <p
