@@ -11,7 +11,7 @@ export function RaylayVoice() {
         Raylay voice
       </p>
       <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
-        The packet, in what it does to you going out
+        The number, said so anyone can use it
       </h2>
       <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
         <ol className="space-y-6">
@@ -21,8 +21,8 @@ export function RaylayVoice() {
           <Beat n="02" title="0.83 g peak">
             Rough starts at 0.10 g RMS. It opens that chart and says the hull crossed it.
           </Beat>
-          <Beat n="03" title="In a boat">
-            Rocking that makes people sick. A swimmer hits stronger, less predictable waves.
+          <Beat n="03" title="In plain words">
+            0.83 g is the hull getting tossed. A fisherman and a crew hear the same sentence.
           </Beat>
         </ol>
 

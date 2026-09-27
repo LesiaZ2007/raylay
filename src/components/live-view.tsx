@@ -10,7 +10,7 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
       <div>
         <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Live view</p>
         <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-          What the numbers do to you on the water
+          The numbers, in plain language
         </h2>
         <p className="mt-5 font-mono text-[11px] text-ink-3">Reading the buoy</p>
       </div>
@@ -29,7 +29,7 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
             Live view
           </p>
           <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-            What the numbers do to you on the water
+            The numbers, in plain language
           </h2>
         </div>
         <p
@@ -67,25 +67,16 @@ export function LiveView({ payload }: { payload: TelemetryPayload | null }) {
 
       <div className="mt-6 grid gap-3 md:grid-cols-2">
         <Meaning
-          who="Going out"
-          text={`Water at ${reading.waterC.toFixed(1)}°C is the band a morning starts in, on a lake or a coast. Waves at ${reading.waveRmsG.toFixed(3)} g RMS are ${seaCall(reading.waveRmsG)}. The ${reading.wavePeakG.toFixed(3)} g peak is the knock you feel in a skiff, not a specialist index.`}
+          who="A fisherman"
+          text={`Water at ${reading.waterC.toFixed(1)}°C is the band bait and fish are sitting in. Waves at ${reading.waveRmsG.toFixed(3)} g RMS, peak ${reading.wavePeakG.toFixed(3)} g. Under 0.02 g the surface is quiet. Over 0.1 g it is working hard.`}
         />
         <Meaning
-          who="Watching the water"
-          text={`Air at ${reading.airC.toFixed(1)}°C and ${reading.pressureHpa.toFixed(0)} hPa are the day changing overhead. A temperature jump, or a node that goes quiet, is the local record a landing has before a county post.`}
+          who="A conservation crew"
+          text={`Air at ${reading.airC.toFixed(1)}°C against that water, and ${reading.pressureHpa.toFixed(0)} hPa overhead. A temperature jump, or a node that goes quiet, is the local record, in the same units a lab would use.`}
         />
       </div>
-      <p className="mt-4 font-mono text-xs text-ink-3">
-        Calm is under 0.02 g. Rough is over 0.1 g. Same fields, said in a boat.
-      </p>
     </div>
   );
-}
-
-function seaCall(rms: number) {
-  if (rms < 0.02) return "calm enough for a flat crossing";
-  if (rms < 0.1) return "workable in a skiff or a kayak, not flat";
-  return "rough enough to stay ashore";
 }
 
 function Meaning({ who, text }: { who: string; text: string }) {

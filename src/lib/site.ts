@@ -2,42 +2,13 @@ export const LIVE_STATION_URL = "https://raylay.amuhak.com";
 
 export const SECTIONS = [
   { id: "title", label: "Raylay" },
-  { id: "how", label: "How it works" },
   { id: "compare", label: "Cost" },
-  { id: "live", label: "Live" },
+  { id: "live", label: "Numbers" },
   { id: "assistant", label: "Raylay voice" },
-  { id: "neighborhoods", label: "Who it helps" },
   { id: "hull", label: "Hull" },
 ] as const;
 
 export type SectionId = (typeof SECTIONS)[number]["id"];
-
-export const PARTS = [
-  {
-    name: "Location",
-    job: "GPS ties the reading to a place. A moving fix means the hull left the water you think you are watching.",
-  },
-  {
-    name: "Water temperature",
-    job: "Bait and fish move with a degree or two. This is the number a morning starts on.",
-  },
-  {
-    name: "Air temperature",
-    job: "The gap between air and water is how fast the surface day is changing.",
-  },
-  {
-    name: "Pressure",
-    job: "A falling barometer is the call to get in before the forecast catches up.",
-  },
-  {
-    name: "Waves and tilt",
-    job: "Under 0.02 g is a calm crossing. Over 0.1 g is stay ashore.",
-  },
-  {
-    name: "Power",
-    job: "A 1W panel keeps it deployed. No service boat, so a landing can leave it where people use the water.",
-  },
-] as const;
 
 export const VOICE_THREAD = [
   {
