@@ -40,15 +40,15 @@ function RayHull() {
           receiveShadow
         >
           <meshPhysicalMaterial
-            color="#eceae4"
-            metalness={0.14}
-            roughness={0.28}
-            clearcoat={0.85}
-            clearcoatRoughness={0.16}
-            sheen={0.35}
-            sheenRoughness={0.4}
-            sheenColor="#d4cfc6"
-            envMapIntensity={1.2}
+            color="#b9b5ad"
+            metalness={0.1}
+            roughness={0.48}
+            clearcoat={0.4}
+            clearcoatRoughness={0.35}
+            sheen={0.15}
+            sheenRoughness={0.6}
+            sheenColor="#9a958c"
+            envMapIntensity={0.55}
           />
         </mesh>
       </Center>
@@ -59,30 +59,30 @@ function RayHull() {
 function Scene() {
   return (
     <>
-      <hemisphereLight args={["#fffaf3", "#0d1114", 0.45]} />
-      <ambientLight intensity={0.18} color="#e8e4dc" />
+      <hemisphereLight args={["#e8e4dc", "#12151a", 0.55]} />
+      <ambientLight intensity={0.12} color="#cfcbc3" />
       <directionalLight
         position={[5.5, 8.5, 4]}
-        intensity={2.1}
-        color="#ffffff"
+        intensity={1.35}
+        color="#f5f2ec"
         castShadow
         shadow-mapSize={[1024, 1024]}
         shadow-bias={-0.0002}
       />
-      <directionalLight position={[-6, 2.5, -3]} intensity={0.55} color="#8a9098" />
-      <directionalLight position={[0, -2, 4]} intensity={0.35} color="#c4b8a8" />
+      <directionalLight position={[-6, 2.5, -3]} intensity={0.7} color="#6d7580" />
+      <directionalLight position={[0, -2, 4]} intensity={0.25} color="#8a8478" />
       <spotLight
         position={[2, 8, 3]}
-        intensity={1.1}
-        color="#fff7ec"
+        intensity={0.55}
+        color="#fff4e6"
         angle={0.38}
-        penumbra={0.65}
+        penumbra={0.7}
         castShadow
       />
-      <Environment preset="studio" environmentIntensity={0.7} />
+      <Environment preset="studio" environmentIntensity={0.35} />
       <ContactShadows
         position={[0, -1.55, 0]}
-        opacity={0.55}
+        opacity={0.6}
         scale={10}
         blur={2.4}
         far={5}
