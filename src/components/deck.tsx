@@ -97,6 +97,30 @@ export function Deck() {
           <RaylayVoice />
         </Pane>
       </Slide>
+
+      <Slide id="impact">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Impact</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            What this means on the water
+          </h2>
+          <ul className="mt-10 max-w-3xl space-y-6 text-[15px] leading-relaxed text-ink-2">
+            <li>
+              <span className="text-ink">A fisherman</span> gets water temperature and wave energy
+              for their own landing, not a national buoy hours away — and can ask what happened in
+              the past couple of hours.
+            </li>
+            <li>
+              <span className="text-ink">A conservation group</span> keeps a local record: quiet
+              stretches, rough-water patches, impact warnings, named in the same sentence.
+            </li>
+            <li>
+              <span className="text-ink">A community</span> can afford the hull. $15,000–$50,000
+              becomes parts, and the reading belongs to the people watching that shore.
+            </li>
+          </ul>
+        </Pane>
+      </Slide>
     </div>
   );
 }
