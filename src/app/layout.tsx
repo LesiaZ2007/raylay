@@ -17,7 +17,7 @@ const mono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Raylay",
   description:
-    "Manta-ray sensor buoys for water temperature, air, pressure, and wave energy. Live on Raylay.",
+    "A short video aid for Raylay, the printed buoy. The live demo is Tideline.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
