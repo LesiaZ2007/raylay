@@ -55,17 +55,17 @@ export function Deck() {
       </ol>
 
       <Slide id="title" className="overflow-hidden">
-        <div className="absolute inset-0 z-[1] md:left-[42%] lg:left-[38%]">
-          <BuoyViewer className="h-full w-full" />
-        </div>
-        <Pane>
-          <div className="relative z-[2] max-w-md md:max-w-lg">
+        <Pane className="!justify-center gap-10 md:grid md:grid-cols-2 md:items-center md:gap-8 lg:gap-12">
+          <div className="relative z-[2] max-w-lg">
             <h1 className="text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
             <p className="mt-6 text-lg leading-relaxed text-ink-2">
               A cheaper buoy network for people and communities watching their own water. About
               26 cm across, and easy to make. The numbers come back for a fisherman, a conservation
               crew, or anyone else on that shore.
             </p>
+          </div>
+          <div className="relative z-[1] h-[42vh] min-h-56 w-full md:h-[min(70vh,560px)]">
+            <BuoyViewer className="h-full w-full" />
           </div>
         </Pane>
       </Slide>
