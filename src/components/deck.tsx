@@ -58,8 +58,9 @@ export function Deck() {
           </p>
           <h1 className="mt-3 text-6xl font-light tracking-tight text-ink md:text-8xl">Raylay</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
-            A printed hull, a board, and a handful of catalog sensors. They mesh over ESP-NOW and
-            show up on Raylay as water, air, pressure, wave energy, tilt, and GPS.
+            About 200 official buoys cover the country, sited for shipping lanes and forecasts. A
+            landing almost never gets one. Raylay is a printed hull you can put in the water you
+            actually use.
           </p>
           <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
             <Metric label="Water" value={station.waterC.toFixed(1)} unit="°C" />
