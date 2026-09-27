@@ -93,7 +93,11 @@
 }
 
 .tide-water {
-  background: linear-gradient(180deg, transparent 0%, #0b3b3c 58%, #072c2e 100%);
+  background: linear-gradient(180deg, transparent 0%, #0b3b3c 50%, #072c2e 100%);
+}
+
+.tide-floor {
+  background: #072c2e;
 }
 
 @media (prefers-reduced-motion: reduce) {

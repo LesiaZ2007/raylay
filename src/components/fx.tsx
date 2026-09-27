@@ -49,9 +49,7 @@ export function Field() {
   const farScale = useTransform(scrollYProgress, [0, 1], [1, 1.28]);
   const nearY = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
   const nearScale = useTransform(scrollYProgress, [0, 1], [1, 1.55]);
-  const waterY = useTransform(scrollYProgress, [0, 1], ["12%", "-18%"]);
-  const waterH = useTransform(scrollYProgress, [0, 1], ["32%", "68%"]);
-  const waterScale = useTransform(scrollYProgress, [0, 1], [1, 1.18]);
+  const waterH = useTransform(scrollYProgress, [0, 1], ["36%", "70%"]);
   const glow = useTransform(scrollYProgress, [0, 1], [0.16, 0.38]);
 
   if (reduce) {
@@ -74,17 +72,12 @@ export function Field() {
         className="tide-grid-near absolute -inset-[42%]"
         style={{ y: nearY, scale: nearScale, transformOrigin: "50% 55%" }}
       />
-      <motion.div
-        className="absolute inset-x-[-10%] bottom-0"
-        style={{ y: waterY, height: waterH, scale: waterScale, transformOrigin: "50% 100%" }}
-      >
+      <motion.div className="absolute inset-x-0 bottom-0" style={{ height: waterH }}>
         <div className="tide-water absolute inset-0" />
         <Horizon />
       </motion.div>
-      <motion.div
-        className="absolute inset-x-0 bottom-0 h-[55%]"
-        style={{ opacity: glow }}
-      >
+      <div className="tide-floor absolute inset-x-0 bottom-0 h-28" />
+      <motion.div className="absolute inset-x-0 bottom-0 h-[55%]" style={{ opacity: glow }}>
         <div className="h-full w-full bg-[radial-gradient(ellipse_at_center_bottom,_#08bdba33,_transparent_62%)]" />
       </motion.div>
       <div className="absolute top-10 left-6 size-1.5 bg-accent/80 md:left-10" />
