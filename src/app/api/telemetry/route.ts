@@ -52,7 +52,7 @@ export async function GET() {
         liveUrlTried: tried,
         reading,
         history: [...buildReplayHistory(now).slice(0, -1), reading],
-        note: "Live packets from the Raylay station.",
+        note: "Live from the station.",
       }
     : {
         source: "offline",
@@ -60,7 +60,7 @@ export async function GET() {
         liveUrlTried: tried,
         reading: buildReplayReading(now),
         history: buildReplayHistory(now),
-        note: "Station is offline. Showing a field-session replay so the talk still has numbers on screen.",
+        note: "The live site isn’t up, so this is a recorded session.",
       };
 
   return Response.json(payload);

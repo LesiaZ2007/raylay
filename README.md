@@ -1,20 +1,20 @@
 # Raylay
 
-A 3-minute presentation site for **Raylay**, a low-cost data-collection buoy that measures water temperature, wave height, and sea state, then publishes the packets.
+A short scrolling talk for **Raylay**, a 3D-printed sensor buoy that measures water temperature and wave height and publishes the numbers.
 
-The live station is [raylay.amuhak.com](https://raylay.amuhak.com). When that host is down, the Live section keeps a clearly labeled field-session replay on screen so the talk never goes blank.
+The live tracker is [raylay.amuhak.com](https://raylay.amuhak.com). If that host is down, the data slide uses a recorded session and says so.
 
-## What you can walk in three minutes
+This is meant to be presented, not clicked through. Scroll (or use the arrow keys / space) and talk to what’s on screen.
 
-1. **Pitch** — RAY is the hull. The lay is the relay.
-2. **The gap** — official buoys watch shipping lanes; most working water is unread.
-3. **Meet RAY** — the real print mesh, orbitable in the browser.
-4. **Sensors** — temperature, inertial wave array, fix, logger, uplink, solar, sealed bay.
-5. **Live** — public feed, or an honest replay if the station is offline.
-6. **Impact** — affordability, small-craft safety, communities the maps skip, repairable hardware.
-7. **Close** — one prototype versus a public network.
+## The talk
 
-Desktop presenters can use **space**, **↓**, or **Page Down** to advance.
+1. What we built
+2. Why cheap local measurements matter
+3. The RAY hull (the real print mesh)
+4. What’s inside
+5. What the data looks like
+6. Who actually uses this — boats, fishing, swimming, docks, flood-prone waterfronts, classrooms
+7. How you go from one buoy to a string of them
 
 ## Run locally
 
@@ -23,15 +23,4 @@ npm install
 npm run dev
 ```
 
-Then open [http://127.0.0.1:43127](http://127.0.0.1:43127).
-
-```bash
-npm run build
-npm start -- --port 43127
-```
-
-## Project notes
-
-- The hull on the page is the uploaded `RAY.stl` mesh (`public/models/RAY.stl`).
-- Telemetry is proxied through `src/app/api/telemetry/route.ts`, which tries the public station and falls back to replay.
-- No login and no database. This site is the briefing; the station is the instrument.
+Open [http://127.0.0.1:43127](http://127.0.0.1:43127).

@@ -191,12 +191,83 @@
   }
 }
 
+.ring-spin {
+  animation: spin 28s linear infinite;
+}
+
+.ring-spin-rev {
+  animation: spin 40s linear infinite reverse;
+}
+
+.ring-spin-fast {
+  animation: spin 14s linear infinite;
+}
+
+.wave-a {
+  animation: wave-drift 11s ease-in-out infinite;
+}
+
+.wave-b {
+  animation: wave-drift 17s ease-in-out infinite reverse;
+}
+
+.link-pulse {
+  stroke-dasharray: 6 4;
+  animation: dash-move 5s linear infinite;
+}
+
+.node-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: node-breathe 3.4s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wave-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes dash-move {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+@keyframes node-breathe {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.18);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-snap-type: none;
   }
 
-  body::before {
+  body::before,
+  .ring-spin,
+  .ring-spin-rev,
+  .ring-spin-fast,
+  .wave-a,
+  .wave-b,
+  .link-pulse,
+  .node-ring {
     animation: none;
   }
 }

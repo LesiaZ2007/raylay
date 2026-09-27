@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { SECTIONS, type SectionId } from "@/lib/site";
 
 export function usePresentation() {
-  const [active, setActive] = useState<SectionId>("pitch");
+  const [active, setActive] = useState<SectionId>("title");
 
   useEffect(() => {
     const nodes = SECTIONS.map((section) => document.getElementById(section.id)).filter(
@@ -21,7 +21,7 @@ export function usePresentation() {
           setActive(visible.target.id as SectionId);
         }
       },
-      { rootMargin: "-28% 0px -48% 0px", threshold: [0.15, 0.35, 0.6] },
+      { rootMargin: "-32% 0px -42% 0px", threshold: [0.2, 0.45, 0.7] },
     );
 
     nodes.forEach((node) => observer.observe(node));
@@ -38,7 +38,6 @@ export function usePresentation() {
     const onKey = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
       if (target && ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
-
       if (event.key === "ArrowDown" || event.key === "PageDown" || event.key === " ") {
         event.preventDefault();
         jump(1);
