@@ -1,8 +1,8 @@
 # Raylay
 
-Short video aid for the Raylay buoy. The live demo is Tideline: [raylay.amuhak.com](https://raylay.amuhak.com).
+Presentation for the Raylay buoy mesh. Live console: [Tideline](https://raylay.amuhak.com).
 
-Four frames: the claim, the printed hull, the hop to the next node, then the handoff to Tideline. Charts, voice, and live water stay in the console.
+Slides keep the data graphics, the cost comparison, the voice, and who the buoy is for. The writing on each slide stays short. The full console is Tideline.
 
 ## Run
 

@@ -2,10 +2,12 @@
 
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "motion/react";
-import { Field, Pane, Slide } from "@/components/fx";
+import { Field, Pane, Slide, Spark } from "@/components/fx";
+import { LiveView } from "@/components/live-view";
+import { RaylayVoice } from "@/components/raylay-voice";
 import { usePresentation } from "@/hooks/use-presentation";
 import { useStation } from "@/hooks/use-station";
-import { LIVE_STATION_URL, SECTIONS } from "@/lib/site";
+import { COMPARE, LIVE_STATION_URL, PARTS, SECTIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const BuoyViewer = dynamic(
@@ -16,6 +18,7 @@ const BuoyViewer = dynamic(
 export function Deck() {
   const active = usePresentation();
   const station = useStation();
+  const reading = station?.reading;
   const { scrollYProgress } = useScroll();
   const progress = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -55,26 +58,127 @@ export function Deck() {
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
             A printed hull for the landing that never gets an official buoy.
           </p>
-          <p className="mt-4 font-mono text-[11px] text-ink-3">
+          {reading ? (
+            <>
+              <dl className="mt-10 grid max-w-3xl grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-4">
+                <Metric label="Water" value={reading.waterC.toFixed(1)} unit="°C" />
+                <Metric label="Air" value={reading.airC.toFixed(1)} unit="°C" />
+                <Metric label="Waves" value={reading.waveRmsG.toFixed(3)} unit="g" />
+                <Metric label="Pressure" value={reading.pressureHpa.toFixed(0)} unit="hPa" />
+              </dl>
+              <Spark values={reading.sparkWater} className="mt-6 h-9 w-64" />
+            </>
+          ) : null}
+          <p className="mt-3 font-mono text-[11px] text-ink-3">
             <StationLine payload={station} />
           </p>
         </Pane>
       </Slide>
 
-      <Slide id="hull" className="overflow-hidden">
-        <div className="absolute inset-0 z-[1] md:left-[32%] lg:left-[28%]">
-          <BuoyViewer className="h-full w-full" />
-        </div>
+      <Slide id="how">
         <Pane>
-          <div className="relative z-[2] max-w-md">
-            <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">The print</p>
-            <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
-              About 26 cm across
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-ink-2">
-              The probe exits into the water.
-            </p>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">How it works</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            These are the parts
+          </h2>
+          <div className="mt-10 grid gap-px bg-border sm:grid-cols-2">
+            {PARTS.map((part) => (
+              <div key={part.name} className="bg-bg px-5 py-5">
+                <p className="font-mono text-xs text-accent">{part.name}</p>
+                <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{part.job}</p>
+              </div>
+            ))}
           </div>
+        </Pane>
+      </Slide>
+
+      <Slide id="compare">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+            Why it is cheap enough to own
+          </p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Official buoys are a capital project.
+          </h2>
+          <div className="mt-12 overflow-x-auto">
+            <table className="w-full min-w-[640px] text-left text-sm">
+              <thead className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">
+                <tr className="border-b border-border">
+                  <th className="py-3 pr-4 font-medium"> </th>
+                  <th className="py-3 pr-4 font-medium">Typical waverider / NDBC</th>
+                  <th className="py-3 font-medium text-accent">Raylay</th>
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARE.map((row) => (
+                  <tr key={row.topic} className="border-b border-border align-top">
+                    <td className="py-4 pr-4 text-ink-3">{row.topic}</td>
+                    <td className="py-4 pr-6 text-ink-2">{row.them}</td>
+                    <td className="py-4 text-ink">{row.us}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Pane>
+      </Slide>
+
+      <Slide id="live">
+        <Pane>
+          <LiveView payload={station} />
+        </Pane>
+      </Slide>
+
+      <Slide id="assistant">
+        <Pane>
+          <RaylayVoice />
+        </Pane>
+      </Slide>
+
+      <Slide id="fishing">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">
+            Part 2 · Who this is for
+          </p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Fishing already runs on water temperature
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            $138 billion in U.S. sales, 201 million trips. NOAA’s network is about 200 buoys. A
+            creek-mouth landing is not one of them.
+          </p>
+          {reading ? (
+            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+              Buoy {reading.name} is at {reading.waterC.toFixed(1)}°C.
+            </p>
+          ) : null}
+        </Pane>
+      </Slide>
+
+      <Slide id="neighborhoods">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Neighborhoods</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Their water. Their node. Their call.
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            They print the hull, keep the URL, and decide the swim. Not a county post about someone
+            else’s water.
+          </p>
+        </Pane>
+      </Slide>
+
+      <Slide id="boats">
+        <Pane>
+          <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Getting out</p>
+          <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-5xl">
+            Water taxis, skiffs, and unpaid crossings
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+            Under 0.02 g is calm. Over 0.1 g is rough.
+            {reading ? ` Buoy ${reading.name} is at ${reading.waveRmsG.toFixed(3)} g.` : ""} That is
+            the go or stay number.
+          </p>
         </Pane>
       </Slide>
 
@@ -92,20 +196,44 @@ export function Deck() {
         </Pane>
       </Slide>
 
+      <Slide id="hull" className="overflow-hidden">
+        <div className="absolute inset-0 z-[1] md:left-[32%] lg:left-[28%]">
+          <BuoyViewer className="h-full w-full" />
+        </div>
+        <Pane>
+          <div className="relative z-[2] max-w-md">
+            <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">The print</p>
+            <h2 className="mt-3 text-4xl font-light tracking-tight text-ink md:text-5xl">
+              About 26 cm across
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-ink-2">The probe exits into the water.</p>
+          </div>
+        </Pane>
+      </Slide>
+
       <Slide id="end">
         <Pane>
           <p className="font-mono text-[11px] tracking-[0.18em] text-accent uppercase">Tideline</p>
           <h2 className="mt-3 max-w-3xl text-4xl font-light tracking-tight text-ink md:text-6xl">
-            The demo is the console.
+            The page the landing can open
           </h2>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
-            Map, charts, and the voice are there.
-          </p>
           <a href={LIVE_STATION_URL} className="mt-10 font-mono text-sm text-accent">
             {LIVE_STATION_URL.replace("https://", "")}
           </a>
         </Pane>
       </Slide>
+    </div>
+  );
+}
+
+function Metric({ label, value, unit }: { label: string; value: string; unit: string }) {
+  return (
+    <div>
+      <dt className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">{label}</dt>
+      <dd className="mt-1 text-2xl font-light text-ink">
+        {value}
+        <span className="ml-1 text-sm text-ink-3">{unit}</span>
+      </dd>
     </div>
   );
 }
