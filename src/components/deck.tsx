@@ -104,7 +104,7 @@ function Gap({ label, them, us }: { label: string; them: string; us: string }) {
   return (
     <div className="bg-bg px-5 py-6">
       <p className="font-mono text-[10px] tracking-[0.16em] text-ink-3 uppercase">{label}</p>
-      <p className="mt-4 font-mono text-[10px] tracking-[0.14em] text-ink-3 uppercase">Waverider / NDBC</p>
+      <p className="mt-4 font-mono text-[10px] tracking-[0.14em] text-ink-3 uppercase">Typical buoy</p>
       <p className="mt-1 text-3xl font-light tracking-tight text-ink-3">{them}</p>
       <p className="mt-4 font-mono text-[10px] tracking-[0.14em] text-accent uppercase">Raylay</p>
       <p className="mt-1 text-3xl font-light tracking-tight text-accent">{us}</p>
